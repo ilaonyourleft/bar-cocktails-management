@@ -1,66 +1,13 @@
 from django.db import models
 
 
-# Create your models here.
-
-class Barista(models.Model):
-    id = models.OneToOneField('Persona', models.DO_NOTHING, db_column='id', primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'barista'
-
-
-class BaristaGestisceCocktail(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    fk_id_barista = models.ForeignKey(Barista, models.DO_NOTHING, db_column='fk_id_barista')
-    fk_id_cocktail = models.ForeignKey('Cocktail', models.DO_NOTHING, db_column='fk_id_cocktail')
-
-    class Meta:
-        managed = False
-        db_table = 'barista_gestisce_cocktail'
-
-
-class Cliente(models.Model):
-    id = models.OneToOneField('Persona', models.DO_NOTHING, db_column='id', primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'cliente'
-
-
-class ClienteOrdinaCocktailRicevendoCodicePrenotazione(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    data = models.CharField(max_length=100)
-    fk_id_cliente = models.ForeignKey(Cliente, models.DO_NOTHING, db_column='fk_id_cliente')
-    fk_id_cocktail = models.ForeignKey('Cocktail', models.DO_NOTHING, db_column='fk_id_cocktail')
-    fk_id_codice_prenotazione = models.ForeignKey('CodicePrenotazione', models.DO_NOTHING,
-                                                  db_column='fk_id_codice_prenotazione')
-
-    class Meta:
-        managed = False
-        db_table = 'cliente_ordina_cocktail_ricevendo_codice_prenotazione'
-
-
-class Cocktail(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    nome = models.CharField(max_length=100)
-    ingredienti = models.TextField()  # This field type is a guess.
-    prezzo = models.FloatField()
-
-    class Meta:
-        managed = False
-        db_table = 'cocktail'
-
-
-class CodicePrenotazione(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    codice = models.BigIntegerField()
-    fk_id_barista = models.ForeignKey(Barista, models.DO_NOTHING, db_column='fk_id_barista', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'codice_prenotazione'
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 
 
 class Persona(models.Model):
@@ -79,3 +26,82 @@ class Persona(models.Model):
     class Meta:
         managed = False
         db_table = 'persona'
+
+
+class Barista(models.Model):
+    id = models.OneToOneField(Persona,
+                              db_column='id',
+                              primary_key=True,
+                              on_delete=models.CASCADE)
+
+    class Meta:
+        managed = False
+        db_table = 'barista'
+
+
+class Cliente(models.Model):
+    id = models.OneToOneField(Persona,
+                              db_column='id',
+                              primary_key=True,
+                              on_delete=models.CASCADE)
+
+    class Meta:
+        managed = False
+        db_table = 'cliente'
+
+
+class Cocktail(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    nome = models.CharField(max_length=100)
+    ingredienti = models.TextField()  # This field type is a guess.
+    prezzo = models.FloatField()
+
+    class Meta:
+        managed = False
+        db_table = 'cocktail'
+
+
+class BaristaGestisceCocktail(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    fk_id_barista = models.ForeignKey(Barista,
+                                      db_column='fk_id_barista',
+                                      on_delete=models.CASCADE)
+    fk_id_cocktail = models.ForeignKey(Cocktail,
+                                       db_column='fk_id_cocktail',
+                                       on_delete=models.CASCADE)
+
+    class Meta:
+        managed = False
+        db_table = 'barista_gestisce_cocktail'
+
+
+class CodicePrenotazione(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    codice = models.BigIntegerField()
+    fk_id_barista = models.ForeignKey(Barista,
+                                      db_column='fk_id_barista',
+                                      blank=True,
+                                      null=True,
+                                      on_delete=models.CASCADE)
+
+    class Meta:
+        managed = False
+        db_table = 'codice_prenotazione'
+
+
+class ClienteOrdinaCocktailRicevendoCodicePrenotazione(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    data = models.CharField(max_length=100)
+    fk_id_cliente = models.ForeignKey(Cliente,
+                                      db_column='fk_id_cliente',
+                                      on_delete=models.CASCADE)
+    fk_id_cocktail = models.ForeignKey(Cocktail,
+                                       db_column='fk_id_cocktail',
+                                       on_delete=models.CASCADE)
+    fk_id_codice_prenotazione = models.ForeignKey(CodicePrenotazione,
+                                                  db_column='fk_id_codice_prenotazione',
+                                                  on_delete=models.CASCADE)
+
+    class Meta:
+        managed = False
+        db_table = 'cliente_ordina_cocktail_ricevendo_codice_prenotazione'
