@@ -76,15 +76,17 @@ WSGI_APPLICATION = 'barsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'OPTIONS': {
-            'options': '-c search_path=bar'
-        },
-        'USER': 'testbar',
-        'PASSWORD': 'testbar',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'postgres',
+        # 'OPTIONS': {
+        #     'options': '-c search_path=bar'
+        # },
+        # 'USER': 'testbar',
+        # 'PASSWORD': 'testbar',
+        # 'HOST': 'localhost',
+        # 'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

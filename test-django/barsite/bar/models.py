@@ -24,8 +24,8 @@ class Persona(models.Model):
                + ', password: ' + self.password
 
     class Meta:
-        managed = False
-        db_table = 'persona'
+        # managed = False
+        db_table = 'Persona'
 
 
 class Barista(models.Model):
@@ -35,8 +35,8 @@ class Barista(models.Model):
                               on_delete=models.CASCADE)
 
     class Meta:
-        managed = False
-        db_table = 'barista'
+        # managed = False
+        db_table = 'Barista'
 
 
 class Cliente(models.Model):
@@ -46,8 +46,8 @@ class Cliente(models.Model):
                               on_delete=models.CASCADE)
 
     class Meta:
-        managed = False
-        db_table = 'cliente'
+        # managed = False
+        db_table = 'Cliente'
 
 
 class Cocktail(models.Model):
@@ -57,8 +57,8 @@ class Cocktail(models.Model):
     prezzo = models.FloatField()
 
     class Meta:
-        managed = False
-        db_table = 'cocktail'
+        # managed = False
+        db_table = 'Cocktail'
 
 
 class BaristaGestisceCocktail(models.Model):
@@ -71,8 +71,8 @@ class BaristaGestisceCocktail(models.Model):
                                        on_delete=models.CASCADE)
 
     class Meta:
-        managed = False
-        db_table = 'barista_gestisce_cocktail'
+        # managed = False
+        db_table = 'Barista_gestisce_cocktail'
 
 
 class CodicePrenotazione(models.Model):
@@ -85,8 +85,8 @@ class CodicePrenotazione(models.Model):
                                       on_delete=models.CASCADE)
 
     class Meta:
-        managed = False
-        db_table = 'codice_prenotazione'
+        # managed = False
+        db_table = 'Codice_prenotazione'
 
 
 class ClienteOrdinaCocktailRicevendoCodicePrenotazione(models.Model):
@@ -103,5 +103,5 @@ class ClienteOrdinaCocktailRicevendoCodicePrenotazione(models.Model):
                                                   on_delete=models.CASCADE)
 
     class Meta:
-        managed = False
-        db_table = 'cliente_ordina_cocktail_ricevendo_codice_prenotazione'
+        # managed = False
+        db_table = 'Cliente_ordina_cocktail_ricevendo_codice_prenotazione'
