@@ -56,6 +56,10 @@ class Cocktail(models.Model):
     ingredienti = models.TextField()  # This field type is a guess.
     prezzo = models.FloatField()
 
+    def __str__(self):
+        return 'id: ' + str(self.id) + ', nome: ' + self.nome + ', ingredienti: ' \
+               + self.ingredienti + ', prezzo: ' + str(self.prezzo)
+
     class Meta:
         # managed = False
         db_table = 'Cocktail'

@@ -29,15 +29,15 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# contiene tutti i nomi di tutte le app Django attivate in questa istanza
 INSTALLED_APPS = [
     'bar.apps.BarConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin', #sito di amministrazione
+    'django.contrib.auth',#sistema di autenticazione
+    'django.contrib.contenttypes', #un framework per i tipi di contenuto
+    'django.contrib.sessions', #framework di sessioni
+    'django.contrib.messages', #framework di messaggistica
+    'django.contrib.staticfiles', #framework per la gestione di file statici
 ]
 
 MIDDLEWARE = [
