@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bar/style.css' %}">
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body>
+    <h1>Il Bar</h1>
+    {% if cocktail_list %}
+        <ul>
+            {% for cocktail in cocktail_list %}
+                <li>{{cocktail.nome}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

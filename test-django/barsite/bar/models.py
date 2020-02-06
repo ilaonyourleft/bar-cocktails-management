@@ -58,7 +58,8 @@ class Cocktail(models.Model):
 
     def __str__(self):
         return 'id: ' + str(self.id) + ', nome: ' + self.nome + ', ingredienti: ' \
-               + self.ingredienti + ', prezzo: ' + self.prezzo
+               + self.ingredienti + ', prezzo: ' + str(self.prezzo)
+
     class Meta:
         # managed = False
         db_table = 'Cocktail'
