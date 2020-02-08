@@ -22,7 +22,3 @@ class HomepageView(generic.ListView):
 
     def get_queryset(self):
         return Cocktail.objects.all()
-
-    def create_persona(self):
-        persona = Persona.objects.create('pino', 'verde', 'pinoverde@gmail.it', '3203322110', 'pinoverde')
-        persona.save()

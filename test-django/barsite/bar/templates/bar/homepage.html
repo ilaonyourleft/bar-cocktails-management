@@ -2,19 +2,31 @@
 <html lang="it">
 <head>
     {% load static %}
-
     <link rel="stylesheet" type="text/css" href="{% static 'bar/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <meta charset="UTF-8">
     <title>Homepage</title>
 </head>
 <body>
-    <h1>Il Bar</h1>
-    {% if cocktail_list %}
-        <ul>
-            {% for cocktail in cocktail_list %}
-                <li>{{cocktail.nome}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <div class="row">
+        <div class="col-3">
+            <img src="{% static "bar/title-image.jpg"  %}" alt="TitleImage" height="100px">
+        </div>
+        <div class="col-6">
+            <span>Il Bar</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 align-content-end">
+            {% if cocktail_list %}
+                <ul>
+                    {% for cocktail in cocktail_list %}
+                        <li>{{cocktail.nome}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

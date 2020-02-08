@@ -18,14 +18,14 @@ class Persona(models.Model):
     telefono = models.BigIntegerField()
     password = models.CharField(max_length=100)
 
+    class Meta:
+        # managed = False
+        db_table = 'Persona'
+
     def __str__(self):
         return 'id: ' + str(self.id) + ', nome: ' + self.nome + ', cognome: ' \
                + self.cognome + ', email: ' + self.email + ', telefono: ' + str(self.telefono) \
                + ', password: ' + self.password
-
-    class Meta:
-        # managed = False
-        db_table = 'Persona'
 
 
 class Barista(models.Model):
@@ -56,13 +56,13 @@ class Cocktail(models.Model):
     ingredienti = models.TextField()  # This field type is a guess.
     prezzo = models.FloatField()
 
-    def __str__(self):
-        return 'id: ' + str(self.id) + ', nome: ' + self.nome + ', ingredienti: ' \
-               + self.ingredienti + ', prezzo: ' + str(self.prezzo)
-
     class Meta:
         # managed = False
         db_table = 'Cocktail'
+
+    def __str__(self):
+        return 'id: ' + str(self.id) + ', nome: ' + self.nome + ', ingredienti: ' \
+               + self.ingredienti + ', prezzo: ' + str(self.prezzo)
 
 
 class BaristaGestisceCocktail(models.Model):

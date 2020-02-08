@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Cocktail',
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
+                ('id', models.BigAutoField(primary_key=True, serialize=True)),
                 ('nome', models.CharField(max_length=100)),
                 ('ingredienti', models.TextField()),
                 ('prezzo', models.FloatField()),
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Persona',
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
+                ('id', models.BigAutoField(primary_key=True, serialize=True)),
                 ('nome', models.CharField(max_length=100)),
                 ('cognome', models.CharField(max_length=100)),
                 ('email', models.CharField(max_length=100)),
@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CodicePrenotazione',
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
+                ('id', models.BigAutoField(primary_key=True, serialize=True)),
                 ('codice', models.BigIntegerField()),
                 ('fk_id_barista', models.ForeignKey(blank=True, db_column='fk_id_barista', null=True, on_delete=django.db.models.deletion.CASCADE, to='bar.Barista')),
             ],
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ClienteOrdinaCocktailRicevendoCodicePrenotazione',
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
+                ('id', models.BigAutoField(primary_key=True, serialize=True)),
                 ('data', models.CharField(max_length=100)),
                 ('fk_id_cocktail', models.ForeignKey(db_column='fk_id_cocktail', on_delete=django.db.models.deletion.CASCADE, to='bar.Cocktail')),
                 ('fk_id_codice_prenotazione', models.ForeignKey(db_column='fk_id_codice_prenotazione', on_delete=django.db.models.deletion.CASCADE, to='bar.CodicePrenotazione')),
@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BaristaGestisceCocktail',
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
+                ('id', models.BigAutoField(primary_key=True, serialize=True)),
                 ('fk_id_cocktail', models.ForeignKey(db_column='fk_id_cocktail', on_delete=django.db.models.deletion.CASCADE, to='bar.Cocktail')),
                 ('fk_id_barista', models.ForeignKey(db_column='fk_id_barista', on_delete=django.db.models.deletion.CASCADE, to='bar.Barista')),
             ],
