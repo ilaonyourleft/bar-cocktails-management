@@ -30,22 +30,15 @@ def login(request):
 
         p = Persona.objects.get(email=email, password=password)
 
-        print(p)
-
         context = {
             'persona': p,
         }
 
-        # return HttpResponse(str(email) + ' and ' + str(password))
         return render(request, 'bar/ordinazione.html', context)
 
 
 def registrazione(request):
     return HttpResponse('Pagina di registrazione.')
-
-
-def ordinazione(request):
-    return HttpResponse('Pagina di ordinazione.')
 
 
 def codicePrenotazione(request):
