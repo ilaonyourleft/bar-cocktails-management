@@ -36,6 +36,8 @@ def login(request):
                     type_b = Barista.objects.get(id=p_id)
                 except Barista.DoesNotExist as not_b:
                     print(not_b)
+                    return HttpResponse('Nessun utente registrato con queste credenziali.')
+                    # inserisci view per questa eccezione
                 else:
                     print(type_b)
                     context = {

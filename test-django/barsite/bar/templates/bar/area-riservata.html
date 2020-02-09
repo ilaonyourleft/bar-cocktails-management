@@ -5,8 +5,6 @@
     <title>Ordinazione</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'bar/bootstrap/css/bootstrap.css' %}">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
     <link rel="stylesheet" href="{% static 'bar/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'bar/css/area-riservata.css' %}">
@@ -18,34 +16,34 @@
                 <div class="col-2">
                     <img src="{% static 'bar/imgs/title-image.jpg' %}" alt="TitleImage" class="img-fluid rounded-pill">
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <h1>Il Bar</h1>
+                </div>
+                <div class="col-4 align-self-end">
+                    <button type="button" class="btn btn-light btn-sm">Logout</button>
                 </div>
             </div>
         </div>
     </header>
 
-    {% if type == 'barista' %}
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-10">
-                <label>Barista</label>
-                <span>{{ persona.nome }}</span>
-                <span>{{ persona.cognome }}</span>
+                <!-- AREA BARISTA -->
+                {% if type == 'barista' %}
+                    <label>Barista</label>
+                    <span>{{ persona.nome }}</span>
+                    <span>{{ persona.cognome }}</span>
+
+                <!-- AREA CLIENTE -->
+                {% elif type == 'cliente' %}
+                    <label>Cliente</label>
+                    <span>{{ persona.nome }}</span>
+                    <span>{{ persona.cognome }}</span>
+                {% endif %}
             </div>
         </div>
     </div>
-    {% elif type == 'cliente' %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-10">
-                <label>Cliente</label>
-                <span>{{ persona.nome }}</span>
-                <span>{{ persona.cognome }}</span>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 
 </body>
 </html>
