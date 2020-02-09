@@ -11,47 +11,49 @@
     <link rel="stylesheet" href="{% static 'bar/css/homepage.css' %}">
 </head>
 <body>
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-3">
-                <img src="{% static 'bar/imgs/title-image.jpg' %}" alt="TitleImage" class="img-fluid rounded-pill">
-            </div>
-            <div class="col-6">
-                <h1>Il Bar</h1>
-            </div>
-            <div class="col-3">
-                <div class="row">
-                    <div class="col-12">
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-6">
-                                    <label for="inputUsername">Username</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputUsername" placeholder="Username">
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="inputPassword">Password</label>
-                                    <input type="password" class="form-control form-control-sm" id="inputPassword" placeholder="Password">
-                                </div>
-                                <div class="offset-3 col-6 text-center">
-                                    <button type="submit" class="btn btn-primary btn-sm">Accedi</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+    <header>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-3">
+                    <img src="{% static 'bar/imgs/title-image.jpg' %}" alt="TitleImage" class="img-fluid rounded-pill">
                 </div>
-                <div class="row">
-                    <div class="offset-3 col-6 text-center">
-                        <span>oppure</span>
-                    </div>
+                <div class="col-6">
+                    <h1>Il Bar</h1>
                 </div>
-                <div class="row">
-                    <div class="offset-3 col-6 text-center">
-                        <button type="button" class="btn btn-primary btn-sm">Registrati</button>
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label for="inputUsername">Username</label>
+                                        <input type="text" class="form-control form-control-sm" id="inputUsername" placeholder="Username">
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="inputPassword">Password</label>
+                                        <input type="password" class="form-control form-control-sm" id="inputPassword" placeholder="Password">
+                                    </div>
+                                    <div class="offset-3 col-6 text-center">
+                                        <button type="submit" class="btn btn-primary btn-sm">Accedi</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-3 col-6 text-center">
+                            <span>oppure</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-3 col-6 text-center">
+                            <button type="button" class="btn btn-primary btn-sm">Registrati</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
 
     <div class="container mt-3">
         <div class="row justify-content-center">
