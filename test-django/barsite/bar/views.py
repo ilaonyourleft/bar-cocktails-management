@@ -22,3 +22,27 @@ class HomepageView(generic.ListView):
 
     def get_queryset(self):
         return Cocktail.objects.all()
+
+
+def registrazione(request):
+    return HttpResponse('Pagina di registrazione.')
+
+
+def ordinazione(request):
+    return HttpResponse('Pagina di ordinazione.')
+
+
+def codicePrenotazione(request):
+    return HttpResponse('Pagina di codice prenotazione.')
+
+
+def modificaMenu(request):
+    return HttpResponse('Pagina di modifica menu.')
+
+
+def inserisciCocktail(request):
+    return HttpResponse('Pagina di inserimento cocktail.')
+
+
+def controlloCodice(request):
+    return HttpResponse('Pagina di controllo codice prenotazione.')
