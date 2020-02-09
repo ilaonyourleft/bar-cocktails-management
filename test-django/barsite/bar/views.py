@@ -56,6 +56,10 @@ def login(request):
                 return render(request, 'bar/area-riservata.html', context)
 
 
+def logout(request):
+    return render(request, 'bar/homepage.html', None)
+
+
 def registrazione(request):
     return HttpResponse('Pagina di registrazione.')
 
