@@ -38,13 +38,51 @@
             <div class="col-10">
                 <!-- AREA BARISTA -->
                 {% if type == 'barista' %}
-                    <label>Barista</label>
-                    <span>{{ persona.nome }}</span>
-                    <span>{{ persona.cognome }}</span>
+                    <div class="container-intro">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Bentornato, {{ persona.nome }} {{ persona.cognome }}</h5>
+                                        <p>Da qui potrai modificare o inserire nuovi cocktails o controllare i codici di ordinazione.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-card mt-3">
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Modifica i cocktails presenti nel menu</h5>
+                                        <a href="#" class="btn btn-primary">Modifica<i class="fa fa-pencil fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Inserisci un nuovo cocktail</h5>
+                                        <a href="#" class="btn btn-primary">Inserisci<i class="fa fa-plus fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Controlla i codici di ordinazione</h5>
+                                        <a href="#" class="btn btn-primary">Controlla<i class="fa fa-eye fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 <!-- AREA CLIENTE -->
                 {% elif type == 'cliente' %}
-                    <div class="container-jumbotron">
+                    <div class="container-intro">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
@@ -64,7 +102,6 @@
                                     <div class="card-body">
                                         <h5 class="card-title">Fai la tua ordinazione</h5>
                                         <a href="#" class="btn btn-primary">Ordina<i class="fa fa-pencil fa-lg m-2"></i></a>
-
                                     </div>
                                 </div>
                             </div>
