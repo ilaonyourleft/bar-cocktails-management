@@ -4,8 +4,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 from django.views import generic
-from bar.models import Persona
-from bar.models import Cocktail
+from bar.models import Cocktail, Persona
 
 
 # def home(request):
@@ -22,6 +21,23 @@ class HomepageView(generic.ListView):
 
     def get_queryset(self):
         return Cocktail.objects.all()
+
+
+def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        p = Persona.objects.get(email=email, password=password)
+
+        print(p)
+
+        context = {
+            'persona': p,
+        }
+
+        # return HttpResponse(str(email) + ' and ' + str(password))
+        return render(request, 'bar/ordinazione.html', context)
 
 
 def registrazione(request):

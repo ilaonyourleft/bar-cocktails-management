@@ -10,4 +10,6 @@ urlpatterns = [
     path('modifica-menu/', views.modificaMenu, name='modifica-menu'),
     path('inserisci-cocktail/', views.inserisciCocktail, name='inserisci-cocktail'),
     path('controllo-codice/', views.controlloCodice, name='controllo-codice'),
+
+    path('login/', views.login, name="login"),
 ]
