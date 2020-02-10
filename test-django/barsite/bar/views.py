@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 
 # Create your views here.
 from django.views import generic
 from bar.models import Cocktail, Persona
+from .forms import Registrazione
 
 
 # def home(request):
@@ -41,7 +42,34 @@ def login(request):
 
 
 def registrazione(request):
-    return HttpResponse('Pagina di registrazione.')
+    #next = request.GET.get('next')
+    if request.method == 'POST':
+        form = Registrazione(request.POST)
+    if form.is_valid():
+        cliente = form.save(commit=False)
+        password = form.cleaned_data.get('password')
+        cliente.set_password(password)
+        cliente.save()
+        nuovo_cliente = login(email=cliente.email, password=cliente.password)
+        login(request, nuovo_cliente)
+        #if next:
+            #return redirect(next)
+        #return redirect('/')
+    return render(request, 'registrazione.html', {'form': form})
+    # if request.method == 'POST':
+    #     nome = request.POST.get('nome')
+    #     cognome = request.POST.get('cognome')
+    #     email = request.POST.get('email')
+    #     telefono = request.POST.get('telefono')
+    #     password = request.POST.get('password')
+    #
+    # form = Persona.objects.get(nome ='nome', cognome ='cognome', email=email, telefono ='telefono', password=password)
+    # #print(form)
+    # context = {
+    #     'form': form,
+    # }
+    # return render(request, "bar/registrazione.html", context)
+    #return HttpResponse('Pagina di registrazione.')
 
 
 def ordinazione(request):
