@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Area Riservata</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bar/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bar/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'bar/css/area-riservata.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container-header mt-3">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <h1 class="title-header">Cocktail Bar</h1>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="offset-8 col-2">
+                            <a class="btn btn-dark" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <!-- AREA BARISTA -->
+                {% if type == 'barista' %}
+                    <div class="container-intro">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Bentornato, {{ persona.nome }} {{ persona.cognome }}</h5>
+                                        <p>Da qui potrai modificare o inserire nuovi cocktails o controllare i codici di ordinazione.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-card mt-3">
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Modifica i cocktails</h5>
+                                        <a href="#" class="btn btn-light">Modifica<i class="fa fa-pencil fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Inserisci un nuovo cocktail</h5>
+                                        <a href="#" class="btn btn-light">Inserisci<i class="fa fa-plus fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Controlla i codici di ordinazione</h5>
+                                        <a href="#" class="btn btn-light">Controlla<i class="fa fa-eye fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- AREA CLIENTE -->
+                {% elif type == 'cliente' %}
+                    <div class="container-intro">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Bentornato, {{ persona.nome }} {{ persona.cognome }}</h5>
+                                        <p>Da qui potrai fare il tuo ordine o visualizzare il tuo storico ordinazioni.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-card mt-3">
+                        <div class="row">
+                            <div class="offset-2 col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Fai la tua ordinazione</h5>
+                                        <a href="#" class="btn btn-light">Ordina<i class="fa fa-glass fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="card card-action">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Guarda il tuo storico ordinazioni</h5>
+                                        <a href="#" class="btn btn-light">Storico<i class="fa fa-archive fa-lg m-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,4 +1,10 @@
 body {
-    background-color: #5b80b2;
-    font-family: "monospace";
+    background-color: #ffe8a1;
+    font-family: "Amiri";
+    font-style: italic;
+    color: #721c24;
+}
+
+.title-header {
+    font-size: 100px;
 }
