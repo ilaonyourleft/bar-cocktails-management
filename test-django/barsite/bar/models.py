@@ -23,9 +23,9 @@ class Persona(models.Model):
         db_table = 'Persona'
 
     # def __str__(self):
-    #     # return 'id: ' + str(self.id) + ', nome: ' + self.nome + ', cognome: ' \
-    #     #        + self.cognome + ', email: ' + self.email + ', telefono: ' + str(self.telefono) \
-    #     #        + ', password: ' + self.password
+    #     return 'id: ' + str(self.id) + ', nome: ' + self.nome + ', cognome: ' \
+    #            + self.cognome + ', email: ' + self.email + ', telefono: ' + str(self.telefono) \
+    #            + ', password: ' + self.password
     #
     #     return {
     #         'id': str(self.id),

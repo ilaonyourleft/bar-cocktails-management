@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrazione</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bar/bootstrap/css/bootstrap.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bar/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'bar/css/registrazione-avvenuta.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container-header mt-3">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <h1 class="title-header">Cocktail Bar</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{ nome }} {{ cognome }} ti sei registrato con successo!</h5>
+                    <p>con email: {{ email }}, password: {{ password }} e telefono: {{ telefono }}</p>
+                    <a type="button" class="btn btn-dark btn-sm" href="{% url 'goToHomepage' %}">Torna alla Homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

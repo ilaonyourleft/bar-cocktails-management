@@ -61,35 +61,36 @@ def logout(request):
     return render(request, 'bar/homepage.html', None)
 
 
+def goToRegistrazione(request):
+    return render(request, 'bar/registrazione.html', None)
+
+
 def registrazione(request):
-    #next = request.GET.get('next')
     if request.method == 'POST':
-        form = Registrazione(request.POST)
-    if form.is_valid():
-        cliente = form.save(commit=False)
-        password = form.cleaned_data.get('password')
-        cliente.set_password(password)
-        cliente.save()
-        nuovo_cliente = login(email=cliente.email, password=cliente.password)
-        login(request, nuovo_cliente)
-        #if next:
-            #return redirect(next)
-        #return redirect('/')
-    return render(request, 'registrazione.html', {'form': form})
-    # if request.method == 'POST':
-    #     nome = request.POST.get('nome')
-    #     cognome = request.POST.get('cognome')
-    #     email = request.POST.get('email')
-    #     telefono = request.POST.get('telefono')
-    #     password = request.POST.get('password')
-    #
-    # form = Persona.objects.get(nome ='nome', cognome ='cognome', email=email, telefono ='telefono', password=password)
-    # #print(form)
-    # context = {
-    #     'form': form,
-    # }
-    # return render(request, "bar/registrazione.html", context)
-    #return HttpResponse('Pagina di registrazione.')
+        nome = request.POST.get('nome')
+        cognome = request.POST.get('cognome')
+        email = request.POST.get('email')
+        telefono = request.POST.get('telefono')
+        password = request.POST.get('password')
+
+        context = {
+            'nome': nome,
+            'cognome': cognome,
+            'email': email,
+            'telefono': telefono,
+            'password': password,
+        }
+
+        p = Persona(nome=nome, cognome=cognome, email=email, telefono=telefono, password=password)
+        p.save()
+        c = Cliente(id=p)
+        c.save()
+
+        return render(request, 'bar/registrazione-avvenuta.html', context)
+
+
+def goToHomepage(request):
+    return render(request, 'bar/homepage.html', None)
 
 
 def codicePrenotazione(request):
