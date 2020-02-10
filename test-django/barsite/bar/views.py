@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from bar.models import Cocktail, Persona, Cliente, Barista
-from bar.forms import Registrazione
 
 
 # Create your views here.
@@ -91,6 +90,16 @@ def registrazione(request):
 
 def goToHomepage(request):
     return render(request, 'bar/homepage.html', None)
+
+
+def goToModificaMenu(request):
+    list_cocktails = Cocktail.objects.all()
+
+    context = {
+        'list_cocktails': list_cocktails,
+    }
+
+    return render(request, 'bar/modifica-menu.html', context)
 
 
 def codicePrenotazione(request):

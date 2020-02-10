@@ -5,6 +5,7 @@
     <title>Modifica Menu</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'bar/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
@@ -15,15 +16,47 @@
     <header>
         <div class="container-header mt-3">
             <div class="row justify-content-center">
-                <div class="col-2">
-                    <img src="{% static 'bar/imgs/title-image.jpg' %}" alt="TitleImage" class="img-fluid rounded-pill">
-                </div>
                 <div class="col-6">
-                    <h1>Il Bar</h1>
+                    <h1 class="title-header">Cocktail Bar</h1>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="offset-8 col-2">
+                            <a class="btn btn-dark" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+
+    <div class="container-cocktails">
+        {% for cocktail in list_cocktails %}
+            <div class="row justify-content-center m-1">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ cocktail.nome }}
+                        </div>
+                        <div class="card-body">
+                            <p>{{ cocktail.ingredienti }}</p>
+                            <p>{{ cocktail.prezzo }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="#" class="btn btn-dark"><i class="fa fa-pencil"></i></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="#" class="btn btn-dark"><i class="fa fa-trash-o"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
 </body>
 </html>

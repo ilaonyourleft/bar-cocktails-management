@@ -15,7 +15,7 @@ urlpatterns = [
     path('codice-prenotazione/', views.codicePrenotazione, name='codice-prenotazione'),
 
     # BARISTA
-    path('modifica-menu/', views.login, name='modifica-menu'),
+    path('modifica-menu/', views.goToModificaMenu, name='goToModificaMenu'),
     path('inserisci-cocktail/', views.inserisciCocktail, name='inserisci-cocktail'),
     path('controllo-codice/', views.controlloCodice, name='controllo-codice'),
 ]
