@@ -29,6 +29,33 @@
             </div>
         </div>
     </header>
+<form method="post" action="{% url 'inserisci-cocktail' %}">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="inputNome">{{cocktail.nome}}</label>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="inputIngredienti">Ingredienti</label>
+                        <input type="text" class="form-control" id="inputIngredienti" placeholder="{{cocktail.ingredienti}}" name="ingredienti">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="inputPrezzo">Prezzo</label>
+                        <input type="prezzo" class="form-control" id="inputPrezzo" placeholder="{{cocktail.prezzo}}" name="prezzo">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-dark">Inserisci</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
 </body>
 </html>

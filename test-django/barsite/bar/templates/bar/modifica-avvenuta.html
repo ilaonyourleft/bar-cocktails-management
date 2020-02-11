@@ -29,34 +29,5 @@
             </div>
         </div>
     </header>
-
-    <div class="container-cocktails">
-        {% for cocktail in list_cocktails %}
-            <div class="row justify-content-center m-1">
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-header">
-                            {{ cocktail.nome }}
-                        </div>
-                        <div class="card-body">
-                            <p>{{ cocktail.ingredienti }}</p>
-                            <p>{{ cocktail.prezzo }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="{% url 'goToInserisciCocktail' cocktail.id %}" class="btn btn-dark"><i class="fa fa-pencil"></i></a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="#" class="btn btn-dark"><i class="fa fa-trash-o"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
 </body>
 </html>

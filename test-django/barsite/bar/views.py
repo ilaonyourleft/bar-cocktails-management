@@ -135,6 +135,21 @@ def inserisciCocktail(request):
 
         # return HttpResponse('cocktail inserito correttamente')
 
+def goToModificaCocktail(request, cocktail_id):
+    c = Cocktail.objects.get(id = cocktail_id)
+    return render(request, 'bar/modifica-cocktail.html', {'cocktail': c})
+    #return HttpResponse('modifica-cocktail')
+
+def modificaCocktail(request):
+    if request.method == 'POST':
+        ingredienti = request.POST.get('ingredienti')
+        prezzo = request.POST.get('prezzo')
+
+        print(ingredienti)
+        print(prezzo)
+
+    return render(request, 'bar/modifica-avvenuta.html', None)
+
 
 def controlloCodice(request):
     return HttpResponse('Pagina di controllo codice prenotazione.')
