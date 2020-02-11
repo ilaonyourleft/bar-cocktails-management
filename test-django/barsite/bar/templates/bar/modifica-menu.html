@@ -34,18 +34,23 @@
         </div>
     </header>
 
+    <div class="container-title-modifica-menu">
+        <div class="row m-1">
+            <div class="col-12">
+                <h3>Modifica i Cocktail nel menu</h3>
+            </div>
+        </div>
+    </div>
+
     <div class="container-cocktails">
         <div class="row m-1">
             <div class="col-2 text-center">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="#">Active</a>
+                        <a class="nav-link btn-dark m-1" href="#">Inserisci Cocktail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="#">Link</a>
+                        <a class="nav-link btn-dark m-1" href="#">Codici Prenotazione</a>
                     </li>
                 </ul>
             </div>
@@ -55,20 +60,16 @@
                         <div class="row m-1">
                             <div class="col-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        {{ cocktail.nome }}
-                                    </div>
                                     <div class="card-body">
-                                        <p>{{ cocktail.ingredienti }}</p>
-                                        <p>{{ cocktail.prezzo }}</p>
-                                    </div>
-                                    <div class="card-footer">
                                         <div class="row">
-                                            <div class="col-6">
-                                                <a href="{% url 'goToModificaCocktail' cocktail.id %}" class="btn btn-dark"><i class="fa fa-pencil"></i></a>
+                                            <div class="col-10">
+                                                {{ cocktail.nome }}
                                             </div>
-                                            <div class="col-6">
-                                                <a href="#" class="btn btn-dark"><i class="fa fa-trash-o"></i></a>
+                                            <div class="col-1">
+                                                <a href="{% url 'goToModificaCocktail' cocktail.id %}" class="btn btn-dark" title="Modifica Cocktail"><i class="fa fa-pencil"></i></a>
+                                            </div>
+                                            <div class="col-1">
+                                                <a href="#" class="btn btn-dark" title="Elimina Cocktail"><i class="fa fa-trash-o"></i></a>
                                             </div>
                                         </div>
                                     </div>

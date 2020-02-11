@@ -1,6 +1,6 @@
 body {
     /*background-color: rgb(35, 39, 43);*/
-    background-color: #fff;
+    background-color: #f7f7f7;
     font-family: "Amiri";
     font-style: italic;
     color: #000;
@@ -35,3 +35,7 @@ body {
 /*    border-color: transparent;*/
 /*    color: #000;*/
 /*}*/
+
+.card {
+    border-color: #c5a059;
+}
