@@ -111,7 +111,24 @@ def goToInserisciCocktail(request):
 
 
 def inserisciCocktail(request):
-    # return render(request, 'bar/inserisci-cocktail.html', None)
+    if request.method == 'POST':
+        print('sei dentro')
+        nomeCocktail = request.POST.get('nome')
+        ingredienti = request.POST.get('ingredienti')
+        prezzo = request.POST.get('prezzo')
+
+        cocktail = Cocktail(nome=nomeCocktail, ingredienti=ingredienti, prezzo=prezzo)
+        cocktail.save()
+        list_cocktails= Cocktail.objects.all()
+
+        context = {
+            'list_cocktails': list_cocktails
+
+        }
+
+        print(context)
+
+        return render(request, 'bar/modifica-menu.html', context)
 
 
 def controlloCodice(request):
