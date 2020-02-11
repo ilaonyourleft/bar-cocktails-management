@@ -133,20 +133,21 @@ def inserisciCocktail(request):
 
         return render(request, 'bar/inserimento-avvenuto.html', context)
 
-        # return HttpResponse('cocktail inserito correttamente')
 
 def goToModificaCocktail(request, cocktail_id):
-    c = Cocktail.objects.get(id = cocktail_id)
+    c = Cocktail.objects.get(id=cocktail_id)
     return render(request, 'bar/modifica-cocktail.html', {'cocktail': c})
-    #return HttpResponse('modifica-cocktail')
 
-def modificaCocktail(request):
+
+def modificaCocktail(request, cocktail_id):
     if request.method == 'POST':
         ingredienti = request.POST.get('ingredienti')
         prezzo = request.POST.get('prezzo')
 
-        print(ingredienti)
-        print(prezzo)
+    print(ingredienti)
+    print(prezzo)
+
+    c = Cocktail.objects.get(id=cocktail_id)
 
     return render(request, 'bar/modifica-avvenuta.html', None)
 

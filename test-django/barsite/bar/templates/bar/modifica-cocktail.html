@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
     <link rel="stylesheet" href="{% static 'bar/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'bar/css/modifica-cocktail.css' %}">
+    <link rel="stylesheet" href="{% static 'bar/css/modifica-avvenuta.css' %}">
 </head>
 <body>
     <header>
@@ -29,20 +29,20 @@
             </div>
         </div>
     </header>
-<form method="post" action="{% url 'inserisci-cocktail' %}">
+<form method="post" action="{% url 'modifica-cocktail' cocktail.id %}">
         {% csrf_token %}
         <div class="row justify-content-center">
             <div class="col-10">
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="inputNome">{{cocktail.nome}}</label>
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <h5>Modifica cocktail {{ cocktail.nome }}</h5>
                     </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-6">
                         <label for="inputIngredienti">Ingredienti</label>
                         <input type="text" class="form-control" id="inputIngredienti" placeholder="{{cocktail.ingredienti}}" name="ingredienti">
                     </div>
-                </div>
-                <div class="row">
                     <div class="form-group col-6">
                         <label for="inputPrezzo">Prezzo</label>
                         <input type="prezzo" class="form-control" id="inputPrezzo" placeholder="{{cocktail.prezzo}}" name="prezzo">

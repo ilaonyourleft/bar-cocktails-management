@@ -15,9 +15,14 @@ urlpatterns = [
     path('codice-prenotazione/', views.codicePrenotazione, name='codice-prenotazione'),
 
     # BARISTA
+    # --- MODIFICA
     path('modifica-menu/', views.goToModificaMenu, name='goToModificaMenu'),
     path('modifica-cocktail/<int:cocktail_id>/', views.goToModificaCocktail, name='goToModificaCocktail'),
+    path('modifica-avvenuta/<int:cocktail_id>/', views.modificaCocktail, name='modifica-cocktail'),
+    # --- INSERIMENTO
     path('inserisci-cocktail/', views.goToInserisciCocktail, name='goToInserisciCocktail'),
     path('inserimento-avvenuto/', views.inserisciCocktail, name='inserisci-cocktail'),
+    # --- CANCELLAZIONE
+    # --- CONTROLLO CODICE
     path('controllo-codice/', views.controlloCodice, name='controllo-codice'),
 ]
