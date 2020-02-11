@@ -150,8 +150,12 @@ def modificaCocktail(request, cocktail_id):
     print(prezzo)
 
     c = Cocktail.objects.get(id=cocktail_id)
+    context = {
+        'ingredienti': ingredienti,
+        'prezzo': prezzo,
+    }
 
-    return render(request, 'bar/modifica-avvenuta.html', None)
+    return render(request, 'bar/modifica-avvenuta.html', context)
 
 
 def controlloCodice(request):
