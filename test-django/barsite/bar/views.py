@@ -23,7 +23,7 @@ def login(request):
         try:
             p = Persona.objects.get(email=email, password=password)
         except Persona.DoesNotExist as not_p:
-            print(not_p)
+            # print(not_p)
             return HttpResponse('Nessun utente registrato con queste credenziali.')
         else:
             p_id = p.id
@@ -31,15 +31,15 @@ def login(request):
             try:
                 type_c = Cliente.objects.get(id=p_id)
             except Cliente.DoesNotExist as not_c:
-                print(not_c)
+                # print(not_c)
                 try:
                     type_b = Barista.objects.get(id=p_id)
                 except Barista.DoesNotExist as not_b:
-                    print(not_b)
+                    # print(not_b)
                     return HttpResponse('Nessun utente registrato con queste credenziali.')
                     # inserisci view per questa eccezione
                 else:
-                    print(type_b)
+                    # print(type_b)
                     context = {
                         'persona': p,
                         'type': 'barista',
@@ -47,7 +47,7 @@ def login(request):
 
                     return render(request, 'bar/area-riservata.html', context)
             else:
-                print(type_c)
+                # print(type_c)
                 context = {
                     'persona': p,
                     'type': 'cliente',
@@ -112,23 +112,28 @@ def goToInserisciCocktail(request):
 
 def inserisciCocktail(request):
     if request.method == 'POST':
-        print('sei dentro')
         nomeCocktail = request.POST.get('nome')
         ingredienti = request.POST.get('ingredienti')
         prezzo = request.POST.get('prezzo')
 
+        print(nomeCocktail)
+        print(ingredienti)
+        print(prezzo)
+
         cocktail = Cocktail(nome=nomeCocktail, ingredienti=ingredienti, prezzo=prezzo)
         cocktail.save()
-        list_cocktails= Cocktail.objects.all()
 
         context = {
-            'list_cocktails': list_cocktails
-
+            'nome': nomeCocktail,
+            'ingredienti': ingredienti,
+            'prezzo': prezzo,
         }
 
         print(context)
 
-        return render(request, 'bar/modifica-menu.html', context)
+        return render(request, 'bar/inserimento-avvenuto.html', context)
+
+        # return HttpResponse('cocktail inserito correttamente')
 
 
 def controlloCodice(request):

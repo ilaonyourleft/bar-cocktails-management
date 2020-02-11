@@ -17,6 +17,6 @@ urlpatterns = [
     # BARISTA
     path('modifica-menu/', views.goToModificaMenu, name='goToModificaMenu'),
     path('inserisci-cocktail/', views.goToInserisciCocktail, name='goToInserisciCocktail'),
-    path('modifica-menu/', views.inserisciCocktail, name='inserisci-cocktail'),
+    path('inserimento-avvenuto/', views.inserisciCocktail, name='inserisci-cocktail'),
     path('controllo-codice/', views.controlloCodice, name='controllo-codice'),
 ]
