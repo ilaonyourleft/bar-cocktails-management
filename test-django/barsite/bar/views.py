@@ -106,8 +106,12 @@ def codicePrenotazione(request):
     return HttpResponse('Pagina di codice prenotazione.')
 
 
-def inserisciCocktail(request):
+def goToInserisciCocktail(request):
     return render(request, 'bar/inserisci-cocktail.html', None)
+
+
+def inserisciCocktail(request):
+    # return render(request, 'bar/inserisci-cocktail.html', None)
 
 
 def controlloCodice(request):
