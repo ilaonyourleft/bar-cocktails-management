@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
     <link rel="stylesheet" href="{% static 'bar/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'bar/css/inserimento-avvenuto.css' %}">
+    <link rel="stylesheet" href="{% static 'bar/css/cocktail-modificato.css' %}">
 </head>
 <body>
     <header>
@@ -29,18 +29,6 @@
             </div>
         </div>
     </header>
-
-    <div class="row justify-content-center">
-        <div class="col-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5>{{ nome }} inserito con successo!</h5>
-                    <p>con ingredienti: {{ ingredienti }} al modico prezzo di {{ prezzo }} €</p>
-                    <a type="button" class="btn btn-dark btn-sm" href="{% url 'goToModificaMenu' %}">Torna a Modifica Menu</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>
