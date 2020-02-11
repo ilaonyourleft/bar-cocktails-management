@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
+from django.contrib.auth import logout
 from bar.models import Cocktail, Persona, Cliente, Barista
 
 
@@ -57,6 +58,7 @@ def login(request):
 
 
 def logout(request):
+    logout(request)
     return render(request, 'bar/homepage.html', None)
 
 
