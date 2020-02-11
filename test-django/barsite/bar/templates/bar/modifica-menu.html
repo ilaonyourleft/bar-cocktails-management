@@ -9,18 +9,22 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'bar/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'bar/css/modifica-menu.css' %}">
 </head>
 <body>
     <header>
         <div class="container-header mt-3">
-            <div class="row justify-content-center">
-                <div class="col-6">
+            <div class="row m-1">
+                <div class="col-1">
+                    <img src="../../static/bar/imgs/cocktail.svg" alt="bicchiere da cocktail" class="logo-glass">
+                </div>
+                <div class="col-5">
                     <h1 class="title-header">Cocktail Bar</h1>
                 </div>
-                <div class="col-4">
-                    <div class="row">
+                <div class="col-6">
+                    <div class="row justify-content-end">
                         <div class="offset-8 col-2">
                             <a class="btn btn-dark" href="{% url 'logout' %}">Esci</a>
                         </div>
@@ -31,31 +35,50 @@
     </header>
 
     <div class="container-cocktails">
-        {% for cocktail in list_cocktails %}
-            <div class="row justify-content-center m-1">
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-header">
-                            {{ cocktail.nome }}
-                        </div>
-                        <div class="card-body">
-                            <p>{{ cocktail.ingredienti }}</p>
-                            <p>{{ cocktail.prezzo }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="{% url 'goToModificaCocktail' cocktail.id %}" class="btn btn-dark"><i class="fa fa-pencil"></i></a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="#" class="btn btn-dark"><i class="fa fa-trash-o"></i></a>
+        <div class="row m-1">
+            <div class="col-2 text-center">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link btn-dark m-1" href="#">Active</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-dark m-1" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-dark m-1" href="#">Link</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-10">
+                <div class="scrollbar">
+                    {% for cocktail in list_cocktails %}
+                        <div class="row m-1">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        {{ cocktail.nome }}
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{ cocktail.ingredienti }}</p>
+                                        <p>{{ cocktail.prezzo }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <a href="{% url 'goToModificaCocktail' cocktail.id %}" class="btn btn-dark"><i class="fa fa-pencil"></i></a>
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-dark"><i class="fa fa-trash-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
 
 </body>

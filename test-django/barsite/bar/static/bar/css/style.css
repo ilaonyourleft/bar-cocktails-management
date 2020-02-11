@@ -1,10 +1,37 @@
 body {
-    background-color: #ffe8a1;
+    /*background-color: rgb(35, 39, 43);*/
+    background-color: #fff;
     font-family: "Amiri";
     font-style: italic;
-    color: #721c24;
+    color: #000;
 }
 
 .title-header {
-    font-size: 100px;
+    font-size: 6em;
+    font-family: 'Indie Flower', cursive;
+    /*color: #fff;*/
+    color: rgb(35, 39, 43);
 }
+
+.justify-content-center {
+    margin-right: 0px !important;
+}
+
+.scrollbar {
+    margin-left: 30px;
+    margin-bottom: 25px;
+    height: 400px;
+    width: 83%;
+    overflow-y: scroll;
+}
+
+.logo-glass {
+    width: 100%;
+    padding-top: 4px;
+}
+
+/*.btn-dark {*/
+/*    background-color: #c5a059;*/
+/*    border-color: transparent;*/
+/*    color: #000;*/
+/*}*/
