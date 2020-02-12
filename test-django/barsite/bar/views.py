@@ -24,7 +24,7 @@ def login(request):
         try:
             p = Persona.objects.get(email=email, password=password)
         except Persona.DoesNotExist as not_p:
-            # print(not_p)
+
             return HttpResponse('Nessun utente registrato con queste credenziali.')
         else:
             p_id = p.id
@@ -32,11 +32,11 @@ def login(request):
             try:
                 type_c = Cliente.objects.get(id=p_id)
             except Cliente.DoesNotExist as not_c:
-                # print(not_c)
+
                 try:
                     type_b = Barista.objects.get(id=p_id)
                 except Barista.DoesNotExist as not_b:
-                    # print(not_b)
+
                     return HttpResponse('Nessun utente registrato con queste credenziali.')
                     # inserisci view per questa eccezione
                 else:
@@ -164,6 +164,16 @@ def modificaCocktail(request, cocktail_id):
         }
 
         return render(request, 'bar/modifica-avvenuta.html', context)
+
+
+def goToEliminaCocktail(request, cocktail_id):
+    c = Cocktail.objects.get(id=cocktail_id)
+    return render(request, 'bar/elimina-cocktail.html', {'cocktail': c})
+
+def eliminaCocktail(request, cocktail_id):
+    c = Cocktail.objects.get(id=cocktail_id)
+    c.delete()
+    return render(request, 'bar/eliminazione-avvenuta.html', {'cocktail': c})
 
 
 def controlloCodice(request):

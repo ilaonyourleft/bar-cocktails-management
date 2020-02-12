@@ -12,7 +12,6 @@ urlpatterns = [
 
     # CLIENTE
     path('ordinazione/', views.goToOrdinazione, name='goToOrdinazione'),
-    ##path('ordinazione-effettiva/', views.goToOrdinazione, name='goToOrdinazione'),
     path('codice-prenotazione/', views.codicePrenotazione, name='codice-prenotazione'),
 
     # BARISTA
@@ -24,6 +23,8 @@ urlpatterns = [
     path('inserisci-cocktail/', views.goToInserisciCocktail, name='goToInserisciCocktail'),
     path('inserimento-avvenuto/', views.inserisciCocktail, name='inserisci-cocktail'),
     # --- CANCELLAZIONE
+    path('elimina-cocktail/', views.goToEliminaCocktail, name='goToEliminacocktail'),
+    path('eliminazione-avvenuta', views.eliminaCocktail, name='eliminaCocktail'),
     # --- CONTROLLO CODICE
     path('controllo-codice/', views.controlloCodice, name='controllo-codice'),
 ]
