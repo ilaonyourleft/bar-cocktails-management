@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth import logout
-from bar.models import Cocktail, Persona, Cliente, Barista
+from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktailRicevendoCodicePrenotazione, CodicePrenotazione
 
 
 # Create your views here.
@@ -177,5 +177,34 @@ def goToOrdinazione(request):
     }
     return render(request, "bar/ordinazione.html", context)
 
-def faiOrdinazione(request):
-    return HttpResponse('pagina di ordinazione')
+def ordinazioneCocktail(request, cocktail_id):
+    # if request.method == 'POST':
+    #     id = request.POST.get('id')
+    #     data = request.POST.get('data')
+    #     fk_id_cliente = request.POST.get('fk_id_cliente')
+    #     fk_id_cocktail = request.POST.get('fk_id_cocktail')
+    #     fk_id_codice_prenotazione = request.POST.get('fk_id_codice_prenotazione')
+
+        #print(id, fk_id_cliente, fk_id_cocktail,fk_id_codice_prenotazione)
+
+    c = Cocktail.objects.get(id=cocktail_id)
+    # id = ClienteOrdinaCocktailRicevendoCodicePrenotazione.id
+    # data = ClienteOrdinaCocktailRicevendoCodicePrenotazione.data
+    # fk_id_cliente = Cliente.objects.get(id=cliente_id)
+    # fk_id_cocktail = Cocktail.objects.get(id=cocktail_id)
+    # fk_id_codice_prenotazione = CodicePrenotazione.objects.get(id=codice_prenotazione_id)
+
+
+    # ordinazione = ClienteOrdinaCocktailRicevendoCodicePrenotazione(id=id, data=data, fk_id_cliente=fk_id_cliente, fk_id_cocktail=fk_id_cocktail, fk_id_codice_prenotazione=fk_id_codice_prenotazione)
+    # ordinazione.save()
+
+    context = {
+        'c': c,
+        # 'id': id,
+        # 'data': data,
+        # 'fk_id_cliente': fk_id_cliente,
+        # 'fk_id_cocktail': fk_id_cocktail,
+        # 'fk_id_codice_prenotazione': fk_id_codice_prenotazione,
+    }
+    return render(request, 'bar/ordinazione-avvenuta.html', context)
+
