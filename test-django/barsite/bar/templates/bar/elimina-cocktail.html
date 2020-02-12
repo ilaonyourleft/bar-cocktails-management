@@ -35,5 +35,26 @@
     </header>
     </header>
 
+    <div class="container-title-elimina-cocktail">
+        <div class="row m-1">
+            <div class="col-12">
+                <h3>Eliminazione Cocktail</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-elimina-cocktail">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Il cocktail {{ nome }} è stato eliminato.</h5>
+                        <a href="{% url 'goToModificaMenu' %}" class="btn btn-dark">Torna al Modifica Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

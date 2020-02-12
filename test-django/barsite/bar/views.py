@@ -5,9 +5,44 @@ from django.contrib.auth import logout
 from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktailRicevendoCodicePrenotazione, CodicePrenotazione
 
 
-# Create your views here.
+# GO TO
+def goToRegistrazione(request):
+    return render(request, 'bar/registrazione.html', None)
 
 
+def goToHomepage(request):
+    return render(request, 'bar/homepage.html', None)
+
+
+def goToModificaMenu(request):
+    list_cocktails = Cocktail.objects.all()
+
+    context = {
+        'list_cocktails': list_cocktails,
+    }
+
+    return render(request, 'bar/modifica-menu.html', context)
+
+
+def goToInserisciCocktail(request):
+    return render(request, 'bar/inserisci-cocktail.html', None)
+
+
+def goToModificaCocktail(request, cocktail_id):
+    c = Cocktail.objects.get(id=cocktail_id)
+    return render(request, 'bar/modifica-cocktail.html', {'cocktail': c})
+
+
+def goToOrdinazione(request):
+    list_cocktails = Cocktail.objects.all()
+
+    context = {
+        'list_cocktails': list_cocktails,
+    }
+    return render(request, "bar/ordinazione.html", context)
+
+
+# METODI QUERY
 class HomepageView(generic.ListView):
     template_name = 'bar/homepage.html'
     context_object_name = 'cocktail_list'
@@ -24,7 +59,7 @@ def login(request):
         try:
             p = Persona.objects.get(email=email, password=password)
         except Persona.DoesNotExist as not_p:
-
+            # print(not_p)
             return HttpResponse('Nessun utente registrato con queste credenziali.')
         else:
             p_id = p.id
@@ -32,11 +67,11 @@ def login(request):
             try:
                 type_c = Cliente.objects.get(id=p_id)
             except Cliente.DoesNotExist as not_c:
-
+                # print(not_c)
                 try:
                     type_b = Barista.objects.get(id=p_id)
                 except Barista.DoesNotExist as not_b:
-
+                    # print(not_b)
                     return HttpResponse('Nessun utente registrato con queste credenziali.')
                     # inserisci view per questa eccezione
                 else:
@@ -60,10 +95,6 @@ def login(request):
 def logout(request):
     logout(request)
     return render(request, 'bar/homepage.html', None)
-
-
-def goToRegistrazione(request):
-    return render(request, 'bar/registrazione.html', None)
 
 
 def registrazione(request):
@@ -90,28 +121,6 @@ def registrazione(request):
         return render(request, 'bar/registrazione-avvenuta.html', context)
 
 
-def goToHomepage(request):
-    return render(request, 'bar/homepage.html', None)
-
-
-def goToModificaMenu(request):
-    list_cocktails = Cocktail.objects.all()
-
-    context = {
-        'list_cocktails': list_cocktails,
-    }
-
-    return render(request, 'bar/modifica-menu.html', context)
-
-
-def codicePrenotazione(request):
-    return HttpResponse('Pagina di codice prenotazione.')
-
-
-def goToInserisciCocktail(request):
-    return render(request, 'bar/inserisci-cocktail.html', None)
-
-
 def inserisciCocktail(request):
     if request.method == 'POST':
         nomeCocktail = request.POST.get('nome')
@@ -128,11 +137,6 @@ def inserisciCocktail(request):
         }
 
         return render(request, 'bar/inserimento-avvenuto.html', context)
-
-
-def goToModificaCocktail(request, cocktail_id):
-    c = Cocktail.objects.get(id=cocktail_id)
-    return render(request, 'bar/modifica-cocktail.html', {'cocktail': c})
 
 
 def modificaCocktail(request, cocktail_id):
@@ -166,27 +170,6 @@ def modificaCocktail(request, cocktail_id):
         return render(request, 'bar/modifica-avvenuta.html', context)
 
 
-def goToEliminaCocktail(request, cocktail_id):
-    c = Cocktail.objects.get(id=cocktail_id)
-    return render(request, 'bar/elimina-cocktail.html', {'cocktail': c})
-
-def eliminaCocktail(request, cocktail_id):
-    c = Cocktail.objects.get(id=cocktail_id)
-    c.delete()
-    return render(request, 'bar/eliminazione-avvenuta.html', {'cocktail': c})
-
-
-def controlloCodice(request):
-    return HttpResponse('Pagina di controllo codice prenotazione.')
-
-def goToOrdinazione(request):
-    list_cocktails = Cocktail.objects.all()
-
-    context = {
-        'list_cocktails': list_cocktails,
-    }
-    return render(request, "bar/ordinazione.html", context)
-
 def ordinazioneCocktail(request, cocktail_id):
     # if request.method == 'POST':
     #     id = request.POST.get('id')
@@ -195,7 +178,7 @@ def ordinazioneCocktail(request, cocktail_id):
     #     fk_id_cocktail = request.POST.get('fk_id_cocktail')
     #     fk_id_codice_prenotazione = request.POST.get('fk_id_codice_prenotazione')
 
-        #print(id, fk_id_cliente, fk_id_cocktail,fk_id_codice_prenotazione)
+    # print(id, fk_id_cliente, fk_id_cocktail,fk_id_codice_prenotazione)
 
     c = Cocktail.objects.get(id=cocktail_id)
     # id = ClienteOrdinaCocktailRicevendoCodicePrenotazione.id
@@ -203,7 +186,6 @@ def ordinazioneCocktail(request, cocktail_id):
     # fk_id_cliente = Cliente.objects.get(id=cliente_id)
     # fk_id_cocktail = Cocktail.objects.get(id=cocktail_id)
     # fk_id_codice_prenotazione = CodicePrenotazione.objects.get(id=codice_prenotazione_id)
-
 
     # ordinazione = ClienteOrdinaCocktailRicevendoCodicePrenotazione(id=id, data=data, fk_id_cliente=fk_id_cliente, fk_id_cocktail=fk_id_cocktail, fk_id_codice_prenotazione=fk_id_codice_prenotazione)
     # ordinazione.save()
@@ -217,4 +199,24 @@ def ordinazioneCocktail(request, cocktail_id):
         # 'fk_id_codice_prenotazione': fk_id_codice_prenotazione,
     }
     return render(request, 'bar/ordinazione-avvenuta.html', context)
+
+
+def eliminaCocktail(request, cocktail_id):
+    print(cocktail_id)
+    c = Cocktail.objects.get(id=cocktail_id)
+    nome = c.nome
+    c.delete()
+
+    context = {
+        'nome': nome
+    }
+    return render(request, 'bar/elimina-cocktail.html', context)
+
+
+def codicePrenotazione(request):
+    return HttpResponse('Pagina di codice prenotazione.')
+
+
+def controlloCodice(request):
+    return HttpResponse('Pagina di controllo codice prenotazione.')
 
