@@ -41,18 +41,48 @@
         </div>
     </div>
 
-    <div class="container-ordinazione">
+    <div class="container-cocktails">
         <div class="row m-1">
-            <div class="col-2 text-center">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="#">Visualizza Storico</a>
-                    </li>
-                </ul>
+            <div class="col-10">
+                <div class="scrollbar">
+                    {% for cocktail in list_cocktails %}
+                        <div class="row m-1">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <h3>{{ cocktail.nome }}</h3>
+                                                {{ cocktail.ingredienti }}
+                                                {{ cocktail.prezzo }}
+                                            </div>
+                                            <div class="col-1">
+                                                <a href="#" class="btn btn-dark" title="Aggiungi Cocktail"><i class="fa fa-pencil"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="col-10"></div>
         </div>
     </div>
+
+
+    <div class="container-ordinazione">
+            <div class="row m-1">
+                <div class="col-2 text-center">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link btn-dark m-1" href="#">Visualizza Storico</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-10"></div>
+            </div>
+        </div>
 
 </body>
 </html>

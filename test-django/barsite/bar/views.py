@@ -168,3 +168,14 @@ def modificaCocktail(request, cocktail_id):
 
 def controlloCodice(request):
     return HttpResponse('Pagina di controllo codice prenotazione.')
+
+def goToOrdinazione(request):
+    list_cocktails = Cocktail.objects.all()
+
+    context = {
+        'list_cocktails': list_cocktails,
+    }
+    return render(request, "bar/ordinazione.html", context)
+
+def faiOrdinazione(request):
+    return HttpResponse('pagina di ordinazione')
