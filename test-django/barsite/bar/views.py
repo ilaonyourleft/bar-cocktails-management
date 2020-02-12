@@ -118,10 +118,6 @@ def inserisciCocktail(request):
         ingredienti = request.POST.get('ingredienti')
         prezzo = request.POST.get('prezzo')
 
-        print(nomeCocktail)
-        print(ingredienti)
-        print(prezzo)
-
         cocktail = Cocktail(nome=nomeCocktail, ingredienti=ingredienti, prezzo=prezzo)
         cocktail.save()
 
@@ -130,8 +126,6 @@ def inserisciCocktail(request):
             'ingredienti': ingredienti,
             'prezzo': prezzo,
         }
-
-        print(context)
 
         return render(request, 'bar/inserimento-avvenuto.html', context)
 
@@ -146,16 +140,30 @@ def modificaCocktail(request, cocktail_id):
         ingredienti = request.POST.get('ingredienti')
         prezzo = request.POST.get('prezzo')
 
-    print(ingredienti)
-    print(prezzo)
+        c = Cocktail.objects.get(id=cocktail_id)
 
-    c = Cocktail.objects.get(id=cocktail_id)
-    context = {
-        'ingredienti': ingredienti,
-        'prezzo': prezzo,
-    }
+        if ingredienti and prezzo:
+            c.ingredienti = ingredienti
+            c.prezzo = prezzo
+            c.save()
+            print('aggiorna entrambi')
+        elif not prezzo and ingredienti:
+            c.ingredienti = ingredienti
+            c.save()
+            print('aggiorna ingredienti')
+        elif not ingredienti and prezzo:
+            c.prezzo = prezzo
+            c.save()
+            print('aggiorna prezzo')
+        elif not ingredienti and not prezzo:
+            print('non aggiornare nulla')
 
-    return render(request, 'bar/modifica-avvenuta.html', context)
+        c = Cocktail.objects.get(id=cocktail_id)
+        context = {
+            'cocktail': c,
+        }
+
+        return render(request, 'bar/modifica-avvenuta.html', context)
 
 
 def controlloCodice(request):
