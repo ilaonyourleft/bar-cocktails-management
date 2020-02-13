@@ -6,6 +6,7 @@ from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktai
 from random import randint
 import datetime
 
+
 ordine = []
 totale = 0
 
@@ -281,8 +282,15 @@ def eliminaCocktail(request, cocktail_id):
     return render(request, 'bar/elimina-cocktail.html', context)
 
 
-def codicePrenotazione(request):
-    return HttpResponse('Pagina di codice prenotazione.')
+def codicePrenotazione(request, barista_id):
+    list_codici = CodicePrenotazione.objects.all()
+
+    context = {
+        'list_codici': list_codici
+    }
+
+    return render(request, 'bar/codice-prenotazione.html', context)
+
 
 
 def controlloCodice(request):
