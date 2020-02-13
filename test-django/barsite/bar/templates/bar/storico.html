@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Ordinazione Cocktail</title>
+    <title>Storico</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'bar/bootstrap/css/bootstrap.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,7 +11,7 @@
     <script src="{% static 'bar/bootstrap/js/bootstrap.js' %}"></script>
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'bar/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'bar/css/ordinazione-cocktail.css' %}">
+    <link rel="stylesheet" href="{% static 'bar/css/storico.css' %}">
 </head>
 <body>
     <header>
@@ -34,15 +34,31 @@
         </div>
     </header>
 
-    <div class="container-title-ordinazione-cocktail">
+    <div class="container-title-storico">
         <div class="row m-1">
             <div class="col-12">
-                <h3>Hai ordinato il cocktail {{ c.nome }}</h3>
+                <h3>Visualizza il tuo storico</h3>
             </div>
         </div>
-        <div class="row m-2">
-            <div class="col-12">
-                <a class="btn btn-dark" href="{% url 'goToOrdinazione' cliente_id %}">Torna al menù</a>
+    </div>
+
+    <div class="container-storico">
+        <div class="row m-1">
+            <div class="col-2">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link btn-dark m-1" href="{% url 'goToOrdinazione' cliente_id %}">Fai il tuo ordine</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10">
+                {% for ordinazione in cocktails %}
+                    <p>Hai ordinato in data {{ ordinazione.data }} il cocktail {{ ordinazione.nome }}</p>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -11,10 +11,11 @@ urlpatterns = [
     path('registrazione-avvenuta', views.registrazione, name='registrazione'),
 
     # CLIENTE
-    path('ordinazione/', views.goToOrdinazione, name='goToOrdinazione'),
-    path('ordinazione-cocktail/<int:cocktail_id>', views.ordinazioneCocktail, name='ordinazione-cocktail'),
-    path('ordinazione-avvenuta/<int:cocktail_id>', views.ordinazioneCocktail, name='ordinazione-cocktail'),
+    path('ordinazione/<int:cliente_id>/', views.goToOrdinazione, name='goToOrdinazione'),
+    path('ordinazione-cocktail/<int:cliente_id>/<int:cocktail_id>/', views.ordinazioneCocktail, name='ordinazione-cocktail'),
+    path('ordinazione-avvenuta/<int:cliente_id>/', views.confermaOrdinazione, name='conferma-ordinazione'),
     path('codice-prenotazione/', views.codicePrenotazione, name='codice-prenotazione'),
+    path('storico/<int:cliente_id>/', views.goToStorico, name='storico'),
 
     # BARISTA
     # --- MODIFICA

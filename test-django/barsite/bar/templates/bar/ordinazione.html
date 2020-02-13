@@ -50,7 +50,7 @@
                         <div class="col-12 text-center">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link btn-dark m-1" href="#">Visualizza Storico</a>
+                                    <a class="nav-link btn-dark m-1" href="{% url 'storico' cliente_id %}">Visualizza Storico</a>
                                 </li>
                             </ul>
                         </div>
@@ -62,12 +62,26 @@
                                     Ordine:
                                 </div>
                                 <div class="card-body">
-                                    cocktails
+                                    {% for o in ordine %}
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <span>{{ o.nome }}</span>
+                                            </div>
+                                            <div class="col-6">
+                                                {{ o.prezzo }} €
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                                 <div class="card-footer">
-                                    Totale: €
+                                    Totale: {{ totale }} €
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 text-center">
+                            <a class="btn btn-dark" href="{% url 'conferma-ordinazione' cliente_id %}">Conferma Ordine</a>
                         </div>
                     </div>
                 </div>
@@ -82,12 +96,14 @@
                                                 <div class="col-3">
                                                     <h5>{{ cocktail.nome }}</h5>
                                                 </div>
-                                                <div class="col-8">
+                                                <div class="col-6">
                                                     {{ cocktail.ingredienti }}
+                                                </div>
+                                                <div class="col-2">
                                                     {{ cocktail.prezzo }}
                                                 </div>
                                                 <div class="col-1 align-content-center">
-                                                    <a href="{% url 'ordinazione-cocktail' cocktail.id %}" class="btn btn-dark" title="Aggiungi Cocktail"><i class="fa fa-plus"></i></a>
+                                                    <a href="{% url 'ordinazione-cocktail' cliente_id cocktail.id %}" class="btn btn-dark" title="Aggiungi Cocktail"><i class="fa fa-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>

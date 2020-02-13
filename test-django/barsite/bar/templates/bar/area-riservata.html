@@ -56,25 +56,25 @@
                     <div class="container-card mt-3">
                         <div class="row">
                             <div class="col-4 text-center">
-                                <div class="card card-action">
+                                <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Modifica i cocktails</h5>
+                                        <h5 class="card-title">Modifica Cocktail</h5>
                                         <a href="{% url 'goToModificaMenu' %}" class="btn btn-dark">Modifica<i class="fa fa-pencil fa-lg m-2"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-4 text-center">
-                                <div class="card card-action">
+                                <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Inserisci un nuovo cocktail</h5>
+                                        <h5 class="card-title">Inserisci Cocktail</h5>
                                         <a href="{% url 'goToInserisciCocktail' %}" class="btn btn-dark">Inserisci<i class="fa fa-plus fa-lg m-2"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-4 text-center">
-                                <div class="card card-action">
+                                <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Controlla i codici di ordinazione</h5>
+                                        <h5 class="card-title">Controlla Codici</h5>
                                         <a href="#" class="btn btn-dark">Controlla<i class="fa fa-eye fa-lg m-2"></i></a>
                                     </div>
                                 </div>
@@ -99,19 +99,19 @@
 
                     <div class="container-card mt-3">
                         <div class="row">
-                            <div class="offset-2 col-4 text-center">
-                                <div class="card card-action">
+                            <div class="col-6 text-center">
+                                <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Fai la tua ordinazione</h5>
-                                        <a href="{% url 'goToOrdinazione' %}" class="btn btn-dark">Ordina<i class="fa fa-glass fa-lg m-2"></i></a>
+                                        <a href="{% url 'goToOrdinazione' persona.id %}" class="btn btn-dark">Ordina<i class="fa fa-glass fa-lg m-2"></i></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 text-center">
-                                <div class="card card-action">
+                            <div class="col-6 text-center">
+                                <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Guarda il tuo storico ordinazioni</h5>
-                                        <a href="#" class="btn btn-dark">Storico<i class="fa fa-archive fa-lg m-2"></i></a>
+                                        <h5 class="card-title">Guarda il tuo storico</h5>
+                                        <a href="{% url 'storico' persona.id %}" class="btn btn-dark">Storico<i class="fa fa-archive fa-lg m-2"></i></a>
                                     </div>
                                 </div>
                             </div>

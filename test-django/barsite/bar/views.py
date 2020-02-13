@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth import logout
 from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktailRicevendoCodicePrenotazione, CodicePrenotazione
+from random import randint
+import datetime
+
+ordine = []
+totale = 0
 
 
 # GO TO
@@ -33,13 +38,48 @@ def goToModificaCocktail(request, cocktail_id):
     return render(request, 'bar/modifica-cocktail.html', {'cocktail': c})
 
 
-def goToOrdinazione(request):
+def goToOrdinazione(request, cliente_id):
+    c = Cliente.objects.get(id=cliente_id)
+
     list_cocktails = Cocktail.objects.all()
+
+    global ordine
+    global totale
 
     context = {
         'list_cocktails': list_cocktails,
+        'cliente': c,
+        'cliente_id': cliente_id,
+        'ordine': ordine,
+        'totale': totale,
     }
     return render(request, "bar/ordinazione.html", context)
+
+
+def goToStorico(request, cliente_id):
+    global ordine
+    ordine = []
+    global totale
+    totale = 0
+
+    cliente = Cliente.objects.get(id=cliente_id)
+
+    list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_cliente=cliente)
+
+    cocktails = []
+    for ordinazione in list_ordinazioni:
+        cocktail = Cocktail.objects.get(id=ordinazione.fk_id_cocktail.id)
+        cocktails.append({
+            'nome': cocktail.nome,
+            'data': ordinazione.data,
+        })
+
+    context = {
+        'cocktails': cocktails,
+        'cliente_id': cliente_id,
+    }
+
+    return render(request, 'bar/storico.html', context)
 
 
 # METODI QUERY
@@ -170,34 +210,62 @@ def modificaCocktail(request, cocktail_id):
         return render(request, 'bar/modifica-avvenuta.html', context)
 
 
-def ordinazioneCocktail(request, cocktail_id):
-    # if request.method == 'POST':
-    #     id = request.POST.get('id')
-    #     data = request.POST.get('data')
-    #     fk_id_cliente = request.POST.get('fk_id_cliente')
-    #     fk_id_cocktail = request.POST.get('fk_id_cocktail')
-    #     fk_id_codice_prenotazione = request.POST.get('fk_id_codice_prenotazione')
-
-    # print(id, fk_id_cliente, fk_id_cocktail,fk_id_codice_prenotazione)
-
+def ordinazioneCocktail(request, cliente_id, cocktail_id):
     c = Cocktail.objects.get(id=cocktail_id)
-    # id = ClienteOrdinaCocktailRicevendoCodicePrenotazione.id
-    # data = ClienteOrdinaCocktailRicevendoCodicePrenotazione.data
-    # fk_id_cliente = Cliente.objects.get(id=cliente_id)
-    # fk_id_cocktail = Cocktail.objects.get(id=cocktail_id)
-    # fk_id_codice_prenotazione = CodicePrenotazione.objects.get(id=codice_prenotazione_id)
 
-    # ordinazione = ClienteOrdinaCocktailRicevendoCodicePrenotazione(id=id, data=data, fk_id_cliente=fk_id_cliente, fk_id_cocktail=fk_id_cocktail, fk_id_codice_prenotazione=fk_id_codice_prenotazione)
-    # ordinazione.save()
+    o = {
+        'id': c.id,
+        'nome': c.nome,
+        'prezzo': c.prezzo,
+    }
+
+    global ordine
+    ordine = ordina(o)
 
     context = {
         'c': c,
-        # 'id': id,
-        # 'data': data,
-        # 'fk_id_cliente': fk_id_cliente,
-        # 'fk_id_cocktail': fk_id_cocktail,
-        # 'fk_id_codice_prenotazione': fk_id_codice_prenotazione,
+        'cliente_id': cliente_id,
     }
+    return render(request, 'bar/ordinazione-cocktail.html', context)
+
+
+def ordina(o):
+    # print('ordina')
+    ordine.append(o)
+
+    global totale
+    totale = totale + o['prezzo']
+
+    return ordine
+
+
+def confermaOrdinazione(request, cliente_id):
+    # print(cliente_id)
+
+    global ordine
+    # print(ordine)
+
+    codice = randint(1000, 9999)
+    # print(codice)
+
+    today = datetime.date.today()
+
+    codice_prenotazione = CodicePrenotazione(codice=codice)
+    codice_prenotazione.save()
+
+    cliente = Cliente.objects.get(id=cliente_id)
+
+    for o in ordine:
+        cocktail = Cocktail.objects.get(id=o['id'])
+
+        ordinazione = ClienteOrdinaCocktailRicevendoCodicePrenotazione(data=today, fk_id_cocktail=cocktail, fk_id_codice_prenotazione=codice_prenotazione, fk_id_cliente=cliente)
+        ordinazione.save()
+
+    context = {
+        'codice': codice,
+        'cliente_id': cliente_id,
+    }
+
     return render(request, 'bar/ordinazione-avvenuta.html', context)
 
 
