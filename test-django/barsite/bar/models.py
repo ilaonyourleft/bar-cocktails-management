@@ -76,6 +76,7 @@ class Cocktail(models.Model):
 
 class BaristaGestisceCocktail(models.Model):
     id = models.BigAutoField(primary_key=True)
+    azione = models.CharField(max_length=100)
     fk_id_barista = models.ForeignKey(Barista,
                                       db_column='fk_id_barista',
                                       on_delete=models.CASCADE)
