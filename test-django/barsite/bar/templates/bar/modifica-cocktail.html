@@ -34,7 +34,7 @@
         </div>
     </header>
 
-    <form method="post" action="{% url 'modifica-cocktail' cocktail.id %}">
+    <form method="post" action="{% url 'modifica-cocktail' barista_id cocktail.id %}">
         {% csrf_token %}
         <div class="row justify-content-center">
             <div class="col-10">

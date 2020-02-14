@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <h5>{{ nome }} inserito con successo!</h5>
                     <p>con ingredienti: {{ ingredienti }} al modico prezzo di {{ prezzo }} €</p>
-                    <a type="button" class="btn btn-dark btn-sm" href="{% url 'goToModificaMenu' %}">Torna a Modifica Menu</a>
+                    <a type="button" class="btn btn-dark btn-sm" href="{% url 'goToModificaMenu' barista_id %}">Torna a Modifica Menu</a>
                 </div>
             </div>
         </div>

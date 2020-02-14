@@ -59,7 +59,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Modifica Cocktail</h5>
-                                        <a href="{% url 'goToModificaMenu' %}" class="btn btn-dark">Modifica<i class="fa fa-pencil fa-lg m-2"></i></a>
+                                        <a href="{% url 'goToModificaMenu' persona.id %}" class="btn btn-dark">Modifica<i class="fa fa-pencil fa-lg m-2"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Inserisci Cocktail</h5>
-                                        <a href="{% url 'goToInserisciCocktail' %}" class="btn btn-dark">Inserisci<i class="fa fa-plus fa-lg m-2"></i></a>
+                                        <a href="{% url 'goToInserisciCocktail' persona.id %}" class="btn btn-dark">Inserisci<i class="fa fa-plus fa-lg m-2"></i></a>
                                     </div>
                                 </div>
                             </div>

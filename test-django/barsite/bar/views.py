@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth import logout
-from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktailRicevendoCodicePrenotazione, CodicePrenotazione
+from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktailRicevendoCodicePrenotazione, CodicePrenotazione, BaristaGestisceCocktail
 from random import randint
 import datetime
 
@@ -20,23 +20,29 @@ def goToHomepage(request):
     return render(request, 'bar/homepage.html', None)
 
 
-def goToModificaMenu(request):
+def goToModificaMenu(request, barista_id):
     list_cocktails = Cocktail.objects.all()
 
     context = {
         'list_cocktails': list_cocktails,
+        'barista_id': barista_id,
     }
 
     return render(request, 'bar/modifica-menu.html', context)
 
 
-def goToInserisciCocktail(request):
-    return render(request, 'bar/inserisci-cocktail.html', None)
+def goToInserisciCocktail(request, barista_id):
+    return render(request, 'bar/inserisci-cocktail.html', {'barista_id': barista_id})
 
 
-def goToModificaCocktail(request, cocktail_id):
+def goToModificaCocktail(request, barista_id, cocktail_id):
     c = Cocktail.objects.get(id=cocktail_id)
-    return render(request, 'bar/modifica-cocktail.html', {'cocktail': c})
+
+    context = {
+        'cocktail': c,
+        'barista_id': barista_id,
+    }
+    return render(request, 'bar/modifica-cocktail.html', context)
 
 
 def goToOrdinazione(request, cliente_id):
@@ -162,7 +168,7 @@ def registrazione(request):
         return render(request, 'bar/registrazione-avvenuta.html', context)
 
 
-def inserisciCocktail(request):
+def inserisciCocktail(request, barista_id):
     if request.method == 'POST':
         nomeCocktail = request.POST.get('nome')
         ingredienti = request.POST.get('ingredienti')
@@ -171,19 +177,27 @@ def inserisciCocktail(request):
         cocktail = Cocktail(nome=nomeCocktail, ingredienti=ingredienti, prezzo=prezzo)
         cocktail.save()
 
+        barista = Barista.objects.get(id=barista_id)
+
+        barista_gestisce_cocktail = BaristaGestisceCocktail(fk_id_cocktail=cocktail, fk_id_barista=barista, azione='Inserimento')
+        barista_gestisce_cocktail.save()
+
         context = {
             'nome': nomeCocktail,
             'ingredienti': ingredienti,
             'prezzo': prezzo,
+            'barista_id': barista_id,
         }
 
         return render(request, 'bar/inserimento-avvenuto.html', context)
 
 
-def modificaCocktail(request, cocktail_id):
+def modificaCocktail(request, barista_id, cocktail_id):
     if request.method == 'POST':
         ingredienti = request.POST.get('ingredienti')
         prezzo = request.POST.get('prezzo')
+
+        barista = Barista.objects.get(id=barista_id)
 
         c = Cocktail.objects.get(id=cocktail_id)
 
@@ -191,14 +205,23 @@ def modificaCocktail(request, cocktail_id):
             c.ingredienti = ingredienti
             c.prezzo = prezzo
             c.save()
+
+            barista_gestisce_cocktail = BaristaGestisceCocktail(fk_id_cocktail=c, fk_id_barista=barista, azione='Modifica')
+            barista_gestisce_cocktail.save()
             print('aggiorna entrambi')
         elif not prezzo and ingredienti:
             c.ingredienti = ingredienti
             c.save()
+
+            barista_gestisce_cocktail = BaristaGestisceCocktail(fk_id_cocktail=c, fk_id_barista=barista, azione='Modifica')
+            barista_gestisce_cocktail.save()
             print('aggiorna ingredienti')
         elif not ingredienti and prezzo:
             c.prezzo = prezzo
             c.save()
+
+            barista_gestisce_cocktail = BaristaGestisceCocktail(fk_id_cocktail=c, fk_id_barista=barista, azione='Modifica')
+            barista_gestisce_cocktail.save()
             print('aggiorna prezzo')
         elif not ingredienti and not prezzo:
             print('non aggiornare nulla')
@@ -206,6 +229,7 @@ def modificaCocktail(request, cocktail_id):
         c = Cocktail.objects.get(id=cocktail_id)
         context = {
             'cocktail': c,
+            'barista_id': barista_id,
         }
 
         return render(request, 'bar/modifica-avvenuta.html', context)
@@ -270,14 +294,14 @@ def confermaOrdinazione(request, cliente_id):
     return render(request, 'bar/ordinazione-avvenuta.html', context)
 
 
-def eliminaCocktail(request, cocktail_id):
-    print(cocktail_id)
+def eliminaCocktail(request, barista_id, cocktail_id):
     c = Cocktail.objects.get(id=cocktail_id)
     nome = c.nome
     c.delete()
 
     context = {
-        'nome': nome
+        'nome': nome,
+        'barista_id': barista_id,
     }
     return render(request, 'bar/elimina-cocktail.html', context)
 
@@ -290,7 +314,6 @@ def codicePrenotazione(request, barista_id):
     }
 
     return render(request, 'bar/codice-prenotazione.html', context)
-
 
 
 def controlloCodice(request):
