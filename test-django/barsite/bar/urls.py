@@ -28,6 +28,5 @@ urlpatterns = [
     path('elimina-cocktail/<int:barista_id>/<int:cocktail_id>/', views.eliminaCocktail, name='eliminaCocktail'),
     # --- CONTROLLO CODICE
     path('controllo-codice/<int:barista_id>/<int:codice_id>/', views.controlloCodice, name='controllo-codice'),
-    path('codice-prenotazione/', views.goToCodicePrenotazione, name='goToCodicePrenotazione'),
     path('codice-prenotazione/<int:barista_id>/', views.goToCodicePrenotazione, name='codice-prenotazione'),
 ]
