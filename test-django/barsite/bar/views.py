@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
-from django.contrib.auth import logout
 from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktailRicevendoCodicePrenotazione, CodicePrenotazione, BaristaGestisceCocktail
 from random import randint
 import datetime
@@ -88,8 +87,16 @@ def goToStorico(request, cliente_id):
 
     return render(request, 'bar/storico.html', context)
 
-def goToCodicePrenotazione(request):
-    return render(request, 'bar/codice-prenotazione.html', None)
+
+def goToCodicePrenotazione(request, barista_id):
+    list_codici = CodicePrenotazione.objects.all()
+
+    context = {
+        'list_codici': list_codici,
+        'barista_id': barista_id,
+    }
+
+    return render(request, 'bar/codice-prenotazione.html', context)
 
 
 # METODI QUERY
@@ -143,7 +150,6 @@ def login(request):
 
 
 def logout(request):
-    logout(request)
     return render(request, 'bar/homepage.html', None)
 
 
@@ -309,19 +315,12 @@ def eliminaCocktail(request, barista_id, cocktail_id):
     return render(request, 'bar/elimina-cocktail.html', context)
 
 
-def codicePrenotazione(request, barista_id):
-    # print(barista_id)
-    # barista = Barista.objects.get(id=barista_id)
-    list_codici = CodicePrenotazione.objects.all()
+def controlloCodice(request, barista_id, codice_id):
 
     context = {
-        'list_codici': list_codici,
         'barista_id': barista_id,
+        'codice_id': codice_id,
     }
 
-    return render(request, 'bar/codice-prenotazione.html', context)
-
-
-def controlloCodice(request):
-    return HttpResponse('Pagina di controllo codice prenotazione.')
+    return render(request, 'bar/controllo-codice.html', context)
 

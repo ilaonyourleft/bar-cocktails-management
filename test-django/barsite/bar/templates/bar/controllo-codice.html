@@ -36,7 +36,7 @@
     <div class="container-title-controlla-codici-prenotazione">
         <div class="row m-1">
             <div class="col-12">
-                <h3>Controlla i Codici di Prenotazione dei Clienti</h3>
+                <h3>Prepara l'ordine con codice {{ codice_id }}</h3>
             </div>
         </div>
     </div>
@@ -46,14 +46,16 @@
             <div class="col-2 text-center">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="#">Modifica Menu</a>
+                        <a class="nav-link btn-dark m-1" href="{% url 'goToModificaMenu' barista_id %}">Modifica Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="#">Inserisci Cocktail</a>
+                        <a class="nav-link btn-dark m-1" href="{% url 'goToInserisciCocktail' barista_id %}">Inserisci Cocktail</a>
                     </li>
                 </ul>
             </div>
-            <div class="col-10">
+            <div class="col-10"></div>
+        </div>
+    </div>
 
 </body>
 </html>

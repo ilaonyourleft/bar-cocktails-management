@@ -47,10 +47,10 @@
             <div class="col-2 text-center">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="{% url 'goToInserisciCocktail' %}">Inserisci Cocktail</a>
+                        <a class="nav-link btn-dark m-1" href="{% url 'goToInserisciCocktail' barista_id %}">Inserisci Cocktail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-dark m-1" href="{% url 'goToModificaMenu' %}">Modifica Menu</a>
+                        <a class="nav-link btn-dark m-1" href="{% url 'goToModificaMenu' barista_id %}">Modifica Menu</a>
                     </li>
                 </ul>
             </div>
@@ -62,11 +62,11 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-10">
+                                            <div class="col-9">
                                                 {{ codice.codice }}
                                             </div>
-                                            <div class="col-2">
-                                                <a href="#" class="btn btn-dark" title="Elimina Cocktail"><i class="fa fa-trash-o"></i></a>
+                                            <div class="col-3">
+                                                <a href="{% url 'controllo-codice' barista_id codice.id %}" class="btn btn-dark">Prepara Cocktail</a>
                                             </div>
                                         </div>
                                     </div>
