@@ -82,6 +82,9 @@ def goToStorico(request, cliente_id):
 
     return render(request, 'bar/storico.html', context)
 
+def goToCodicePrenotazione(request):
+    return render(request, 'bar/codice-prenotazione.html', None)
+
 
 # METODI QUERY
 class HomepageView(generic.ListView):
@@ -283,10 +286,13 @@ def eliminaCocktail(request, cocktail_id):
 
 
 def codicePrenotazione(request, barista_id):
+    # print(barista_id)
+    # barista = Barista.objects.get(id=barista_id)
     list_codici = CodicePrenotazione.objects.all()
 
     context = {
-        'list_codici': list_codici
+        'list_codici': list_codici,
+        'barista_id': barista_id,
     }
 
     return render(request, 'bar/codice-prenotazione.html', context)
