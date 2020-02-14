@@ -314,13 +314,18 @@ def eliminaCocktail(request, barista_id, cocktail_id):
     }
     return render(request, 'bar/elimina-cocktail.html', context)
 
-
-def controlloCodice(request, barista_id, codice_id):
-
+def codicePrenotazione(request, barista_id):
+    list_codici = CodicePrenotazione.objects.all()
     context = {
+        'list_codici': list_codici,
         'barista_id': barista_id,
-        'codice_id': codice_id,
-    }
 
-    return render(request, 'bar/controllo-codice.html', context)
+    }
+    return render(request, 'bar/codice-prenotazione.html', context)
+
+def controlloCodice(request):
+    return HttpResponse('Pagina di controllo codice prenotazione.')
+
+
+
 
