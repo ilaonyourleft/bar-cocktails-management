@@ -17,7 +17,7 @@
         <div class="container-header mt-3">
             <div class="row m-1">
                 <div class="col-1">
-                    <img src="../../static/bar/imgs/cocktail.svg" alt="bicchiere da cocktail" class="logo-glass">
+                    <img src="{% static 'bar/imgs/cocktail.svg' %}" alt="bicchiere da cocktail" class="logo-glass">
                 </div>
                 <div class="col-5">
                     <h1 class="title-header">Cocktail Bar</h1>
@@ -36,7 +36,7 @@
     <div class="container-title-controlla-codici-prenotazione">
         <div class="row m-1">
             <div class="col-12">
-                <h3>Prepara l'ordine con codice {{ codice_id }}</h3>
+                <h3>Prepara l'ordine con codice {{ codice.codice }}</h3>
             </div>
         </div>
     </div>
@@ -53,7 +53,25 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-10"></div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="scrollbar">
+                        {% for cocktail in list_cocktails %}
+                            <div class="card m-1">
+                                <div class="card-body">
+                                    <h5>{{ cocktail.nome }}</h5>
+                                    <p>Ingredienti: {{ cocktail.ingredienti }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-dark" href="{% url 'codice-prenotazione' barista_id %}">Ritorna alla Lista Codici Prenotazione</a>
+                </div>
+            </div>
+            <div class="col-2">
+            </div>
         </div>
     </div>
 

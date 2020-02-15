@@ -89,7 +89,7 @@ def goToStorico(request, cliente_id):
 
 
 def goToCodicePrenotazione(request, barista_id):
-    list_codici = CodicePrenotazione.objects.all()
+    list_codici = CodicePrenotazione.objects.filter(fk_id_barista=None)
 
     context = {
         'list_codici': list_codici,
@@ -217,21 +217,21 @@ def modificaCocktail(request, barista_id, cocktail_id):
 
             barista_gestisce_cocktail = BaristaGestisceCocktail(fk_id_cocktail=c, fk_id_barista=barista, azione='Modifica')
             barista_gestisce_cocktail.save()
-            print('aggiorna entrambi')
+            # print('aggiorna entrambi')
         elif not prezzo and ingredienti:
             c.ingredienti = ingredienti
             c.save()
 
             barista_gestisce_cocktail = BaristaGestisceCocktail(fk_id_cocktail=c, fk_id_barista=barista, azione='Modifica')
             barista_gestisce_cocktail.save()
-            print('aggiorna ingredienti')
+            # print('aggiorna ingredienti')
         elif not ingredienti and prezzo:
             c.prezzo = prezzo
             c.save()
 
             barista_gestisce_cocktail = BaristaGestisceCocktail(fk_id_cocktail=c, fk_id_barista=barista, azione='Modifica')
             barista_gestisce_cocktail.save()
-            print('aggiorna prezzo')
+            # print('aggiorna prezzo')
         elif not ingredienti and not prezzo:
             print('non aggiornare nulla')
 
@@ -316,10 +316,27 @@ def eliminaCocktail(request, barista_id, cocktail_id):
 
 
 def controlloCodice(request, barista_id, codice_id):
+    codice = CodicePrenotazione.objects.get(id=codice_id)
+    barista = Barista.objects.get(id=barista_id)
+
+    codice.fk_id_barista = barista
+    codice.save()
+
+    list_cocktails = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_codice_prenotazione=codice_id)
+
+    cocktails = []
+
+    for c in list_cocktails:
+        cocktail = Cocktail.objects.get(id=c.fk_id_cocktail.id)
+        cocktails.append({
+            'nome': cocktail.nome,
+            'ingredienti': cocktail.ingredienti,
+        })
 
     context = {
         'barista_id': barista_id,
-        'codice_id': codice_id,
+        'codice': codice,
+        'list_cocktails': cocktails,
     }
 
     return render(request, 'bar/controllo-codice.html', context)
