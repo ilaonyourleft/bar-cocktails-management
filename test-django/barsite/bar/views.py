@@ -4,6 +4,7 @@ from django.views import generic
 from bar.models import Cocktail, Persona, Cliente, Barista, ClienteOrdinaCocktailRicevendoCodicePrenotazione, CodicePrenotazione, BaristaGestisceCocktail
 from random import randint
 import datetime
+from django.db import connection
 
 
 ordine = []
@@ -20,7 +21,9 @@ def goToHomepage(request):
 
 
 def goToModificaMenu(request, barista_id):
-    list_cocktails = Cocktail.objects.all()
+    # list_cocktails = Cocktail.objects.all()
+    list_cocktails = Cocktail.objects.raw('select * from main.Cocktail;')
+    # print(list_cocktails)
 
     context = {
         'list_cocktails': list_cocktails,
@@ -35,26 +38,30 @@ def goToInserisciCocktail(request, barista_id):
 
 
 def goToModificaCocktail(request, barista_id, cocktail_id):
-    c = Cocktail.objects.get(id=cocktail_id)
+    # c = Cocktail.objects.get(id=cocktail_id)
+    c = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [cocktail_id])
+    # print(c[0])
 
     context = {
-        'cocktail': c,
+        'cocktail': c[0],
         'barista_id': barista_id,
     }
     return render(request, 'bar/modifica-cocktail.html', context)
 
 
 def goToOrdinazione(request, cliente_id):
-    c = Cliente.objects.get(id=cliente_id)
+    # c = Cliente.objects.get(id=cliente_id)
+    c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [cliente_id])
 
-    list_cocktails = Cocktail.objects.all()
+    # list_cocktails = Cocktail.objects.all()
+    list_cocktails = Cocktail.objects.raw('select * from main.Cocktail;')
 
     global ordine
     global totale
 
     context = {
         'list_cocktails': list_cocktails,
-        'cliente': c,
+        'cliente': c[0],
         'cliente_id': cliente_id,
         'ordine': ordine,
         'totale': totale,
@@ -68,15 +75,18 @@ def goToStorico(request, cliente_id):
     global totale
     totale = 0
 
-    cliente = Cliente.objects.get(id=cliente_id)
+    # cliente = Cliente.objects.get(id=cliente_id)
+    cliente = Cliente.objects.raw('select * from main.Cliente where id = %s;', [cliente_id])
 
-    list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_cliente=cliente)
+    # list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_cliente=cliente[0])
+    list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.raw('select * from main.Cliente_ordina_cocktail_ricevendo_codice_prenotazione where fk_id_cliente = %s;', [cliente[0].id.id])
 
     cocktails = []
     for ordinazione in list_ordinazioni:
-        cocktail = Cocktail.objects.get(id=ordinazione.fk_id_cocktail.id)
+        # cocktail = Cocktail.objects.get(id=ordinazione.fk_id_cocktail.id)
+        cocktail = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [ordinazione.fk_id_cocktail.id])
         cocktails.append({
-            'nome': cocktail.nome,
+            'nome': cocktail[0].nome,
             'data': ordinazione.data,
         })
 
@@ -89,7 +99,9 @@ def goToStorico(request, cliente_id):
 
 
 def goToCodicePrenotazione(request, barista_id):
-    list_codici = CodicePrenotazione.objects.filter(fk_id_barista=None)
+    # list_codici = CodicePrenotazione.objects.filter(fk_id_barista=None)
+    list_codici = CodicePrenotazione.objects.raw('select * from main.Codice_prenotazione where fk_id_barista is null;')
+    print(list_codici)
 
     context = {
         'list_codici': list_codici,
@@ -105,7 +117,8 @@ class HomepageView(generic.ListView):
     context_object_name = 'cocktail_list'
 
     def get_queryset(self):
-        return Cocktail.objects.all()
+        # return Cocktail.objects.all()
+        return Cocktail.objects.raw('select * from main.Cocktail;')
 
 
 def login(request):
@@ -114,19 +127,22 @@ def login(request):
         password = request.POST.get('password')
 
         try:
-            p = Persona.objects.get(email=email, password=password)
+            # p = Persona.objects.get(email=email, password=password)
+            p = Persona.objects.raw('select * from main.Persona where email = %s and password = %s;', [email, password])
         except Persona.DoesNotExist as not_p:
             # print(not_p)
             return HttpResponse('Nessun utente registrato con queste credenziali.')
         else:
-            p_id = p.id
+            p_id = p[0].id
 
             try:
-                type_c = Cliente.objects.get(id=p_id)
+                # type_c = Cliente.objects.get(id=p_id)
+                type_c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [p_id])
             except Cliente.DoesNotExist as not_c:
                 # print(not_c)
                 try:
-                    type_b = Barista.objects.get(id=p_id)
+                    # type_b = Barista.objects.get(id=p_id)
+                    type_b = Barista.objects.raw('select * from main.Barista where id = %s;', [p_id])
                 except Barista.DoesNotExist as not_b:
                     # print(not_b)
                     return HttpResponse('Nessun utente registrato con queste credenziali.')
@@ -134,7 +150,7 @@ def login(request):
                 else:
                     # print(type_b)
                     context = {
-                        'persona': p,
+                        'persona': p[0],
                         'type': 'barista',
                     }
 
@@ -142,7 +158,7 @@ def login(request):
             else:
                 # print(type_c)
                 context = {
-                    'persona': p,
+                    'persona': p[0],
                     'type': 'cliente',
                 }
 
@@ -169,13 +185,21 @@ def registrazione(request):
             'password': password,
         }
 
-        p = Persona(nome=nome, cognome=cognome, email=email, telefono=telefono, password=password)
-        p.save()
-        c = Cliente(id=p)
-        c.save()
+        # p = Persona(nome=nome, cognome=cognome, email=email, telefono=telefono, password=password)
+        # p.save()
+        cursor_p = connection.cursor()
+        cursor_p.execute('insert into main.Persona(nome, cognome, email, telefono, password) values(%s, %s, %s, %s, %s);', [nome, cognome, email, telefono, password])
+
+        p_id = Persona.objects.raw('select id from main.Persona where nome = %s and cognome = %s and email = %s and telefono = %s and password = %s;', [nome, cognome, email, telefono, password])
+
+        # c = Cliente(id=p)
+        # c.save()
+        cursor_c = connection.cursor()
+        cursor_c.execute('insert into main.Cliente(id) values(%s);', [p_id[0].id])
 
         return render(request, 'bar/registrazione-avvenuta.html', context)
 
+# DA QUI
 
 def inserisciCocktail(request, barista_id):
     if request.method == 'POST':
