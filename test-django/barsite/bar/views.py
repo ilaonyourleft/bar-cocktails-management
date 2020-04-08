@@ -134,35 +134,50 @@ def login(request):
             return HttpResponse('Nessun utente registrato con queste credenziali.')
         else:
             p_id = p[0].id
-
-            try:
-                # type_c = Cliente.objects.get(id=p_id)
-                type_c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [p_id])
-            except Cliente.DoesNotExist as not_c:
-                # print(not_c)
-                try:
-                    # type_b = Barista.objects.get(id=p_id)
-                    type_b = Barista.objects.raw('select * from main.Barista where id = %s;', [p_id])
-                except Barista.DoesNotExist as not_b:
-                    # print(not_b)
-                    return HttpResponse('Nessun utente registrato con queste credenziali.')
-                    # inserisci view per questa eccezione
-                else:
-                    # print(type_b)
+            type_c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [p_id])
+            if not type_c:
+                type_b = Barista.objects.raw('select * from main.Barista where id = %s;', [p_id])
+                if type_b:
                     context = {
-                        'persona': p[0],
-                        'type': 'barista',
-                    }
-
-                    return render(request, 'bar/area-riservata.html', context)
+                            'persona': p[0],
+                            'type': 'barista',
+                        }
             else:
-                # print(type_c)
                 context = {
-                    'persona': p[0],
-                    'type': 'cliente',
-                }
+                        'persona': p[0],
+                        'type': 'cliente',
+                    }
+            return render(request, 'bar/area-riservata.html', context)
 
-                return render(request, 'bar/area-riservata.html', context)
+            # try:
+            #     # type_c = Cliente.objects.get(id=p_id)
+            #     type_c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [p_id])
+            #     # print(type_c[0])
+            # except Cliente.DoesNotExist as not_c:
+            #     # print(not_c)
+            #     try:
+            #         # type_b = Barista.objects.get(id=p_id)
+            #         type_b = Barista.objects.raw('select * from main.Barista where id = %s;', [p_id])
+            #     except Barista.DoesNotExist as not_b:
+            #         # print(not_b)
+            #         return HttpResponse('Nessun utente registrato con queste credenziali.')
+            #         # inserisci view per questa eccezione
+            #     else:
+            #         # print(type_b)
+            #         context = {
+            #             'persona': p[0],
+            #             'type': 'barista',
+            #         }
+            #
+            #         return render(request, 'bar/area-riservata.html', context)
+            # else:
+            #     # print(type_c)
+            #     context = {
+            #         'persona': p[0],
+            #         'type': 'cliente',
+            #     }
+            #
+            #     return render(request, 'bar/area-riservata.html', context)
 
 
 def logout(request):
