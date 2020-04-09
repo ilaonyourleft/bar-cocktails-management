@@ -21,9 +21,11 @@ def goToHomepage(request):
 
 
 def goToModificaMenu(request, barista_id):
-    # list_cocktails = Cocktail.objects.all()
-    list_cocktails = Cocktail.objects.raw('select * from main.Cocktail;')
-    # print(list_cocktails)
+    # con raw query
+    # list_cocktails = Cocktail.objects.raw('select * from main.Cocktail;')
+
+    # senza raw query
+    list_cocktails = Cocktail.objects.all()
 
     context = {
         'list_cocktails': list_cocktails,
@@ -38,34 +40,55 @@ def goToInserisciCocktail(request, barista_id):
 
 
 def goToModificaCocktail(request, barista_id, cocktail_id):
-    # c = Cocktail.objects.get(id=cocktail_id)
-    c = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [cocktail_id])
-    # print(c[0])
+    # con raw query
+    # c = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [cocktail_id])
+    #
+    # context = {
+    #     'cocktail': c[0],
+    #     'barista_id': barista_id,
+    # }
+
+    # senza raw query
+    c = Cocktail.objects.get(id=cocktail_id)
 
     context = {
-        'cocktail': c[0],
+        'cocktail': c,
         'barista_id': barista_id,
     }
+
     return render(request, 'bar/modifica-cocktail.html', context)
 
 
 def goToOrdinazione(request, cliente_id):
-    # c = Cliente.objects.get(id=cliente_id)
-    c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [cliente_id])
-
-    # list_cocktails = Cocktail.objects.all()
-    list_cocktails = Cocktail.objects.raw('select * from main.Cocktail;')
-
     global ordine
     global totale
 
+    # con raw query
+    # c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [cliente_id])
+    #
+    # list_cocktails = Cocktail.objects.raw('select * from main.Cocktail;')
+    #
+    # context = {
+    #     'list_cocktails': list_cocktails,
+    #     'cliente': c[0],
+    #     'cliente_id': cliente_id,
+    #     'ordine': ordine,
+    #     'totale': totale,
+    # }
+
+    # senza raw query
+    c = Cliente.objects.get(id=cliente_id)
+
+    list_cocktails = Cocktail.objects.all()
+
     context = {
         'list_cocktails': list_cocktails,
-        'cliente': c[0],
+        'cliente': c,
         'cliente_id': cliente_id,
         'ordine': ordine,
         'totale': totale,
     }
+
     return render(request, "bar/ordinazione.html", context)
 
 
@@ -75,18 +98,29 @@ def goToStorico(request, cliente_id):
     global totale
     totale = 0
 
-    # cliente = Cliente.objects.get(id=cliente_id)
-    cliente = Cliente.objects.raw('select * from main.Cliente where id = %s;', [cliente_id])
+    # con raw query
+    # cliente = Cliente.objects.raw('select * from main.Cliente where id = %s;', [cliente_id])
+    #
+    # list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.raw('select * from main.Cliente_ordina_cocktail_ricevendo_codice_prenotazione where fk_id_cliente = %s;', [cliente[0].id.id])
+    #
+    # cocktails = []
+    # for ordinazione in list_ordinazioni:
+    #     cocktail = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [ordinazione.fk_id_cocktail.id])
+    #     cocktails.append({
+    #         'nome': cocktail[0].nome,
+    #         'data': ordinazione.data,
+    #     })
 
-    # list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_cliente=cliente[0])
-    list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.raw('select * from main.Cliente_ordina_cocktail_ricevendo_codice_prenotazione where fk_id_cliente = %s;', [cliente[0].id.id])
+    # senza raw query
+    cliente = Cliente.objects.get(id=cliente_id)
+
+    list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_cliente=cliente[0])
 
     cocktails = []
     for ordinazione in list_ordinazioni:
-        # cocktail = Cocktail.objects.get(id=ordinazione.fk_id_cocktail.id)
-        cocktail = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [ordinazione.fk_id_cocktail.id])
+        cocktail = Cocktail.objects.get(id=ordinazione.fk_id_cocktail.id)
         cocktails.append({
-            'nome': cocktail[0].nome,
+            'nome': cocktail.nome,
             'data': ordinazione.data,
         })
 
@@ -99,9 +133,11 @@ def goToStorico(request, cliente_id):
 
 
 def goToCodicePrenotazione(request, barista_id):
-    # list_codici = CodicePrenotazione.objects.filter(fk_id_barista=None)
-    list_codici = CodicePrenotazione.objects.raw('select * from main.Codice_prenotazione where fk_id_barista is null;')
-    print(list_codici)
+    # con raw query
+    # list_codici = CodicePrenotazione.objects.raw('select * from main.Codice_prenotazione where fk_id_barista is null;')
+
+    # senza raw query
+    list_codici = CodicePrenotazione.objects.filter(fk_id_barista=None)
 
     context = {
         'list_codici': list_codici,
@@ -117,8 +153,11 @@ class HomepageView(generic.ListView):
     context_object_name = 'cocktail_list'
 
     def get_queryset(self):
-        # return Cocktail.objects.all()
-        return Cocktail.objects.raw('select * from main.Cocktail;')
+        # con raw query
+        # return Cocktail.objects.raw('select * from main.Cocktail;')
+
+        # senza raw query
+        return Cocktail.objects.all()
 
 
 def login(request):
@@ -126,58 +165,62 @@ def login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
+        # con raw query
+        # try:
+        #     p = Persona.objects.raw('select * from main.Persona where email = %s and password = %s;', [email, password])
+        # except Persona.DoesNotExist as not_p:
+        #     # print(not_p)
+        #     return HttpResponse('Nessun utente registrato con queste credenziali.')
+        # else:
+        #     p_id = p[0].id
+        #     type_c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [p_id])
+        #     if not type_c:
+        #         type_b = Barista.objects.raw('select * from main.Barista where id = %s;', [p_id])
+        #         if type_b:
+        #             context = {
+        #                     'persona': p[0],
+        #                     'type': 'barista',
+        #                 }
+        #     else:
+        #         context = {
+        #                 'persona': p[0],
+        #                 'type': 'cliente',
+        #             }
+        #     return render(request, 'bar/area-riservata.html', context)
+
+        # senza raw query
         try:
-            # p = Persona.objects.get(email=email, password=password)
-            p = Persona.objects.raw('select * from main.Persona where email = %s and password = %s;', [email, password])
+            p = Persona.objects.get(email=email, password=password)
         except Persona.DoesNotExist as not_p:
             # print(not_p)
             return HttpResponse('Nessun utente registrato con queste credenziali.')
         else:
-            p_id = p[0].id
-            type_c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [p_id])
-            if not type_c:
-                type_b = Barista.objects.raw('select * from main.Barista where id = %s;', [p_id])
-                if type_b:
+            p_id = p.id
+            try:
+                type_c = Cliente.objects.get(id=p_id)
+            except Cliente.DoesNotExist as not_c:
+                # print(not_c)
+                try:
+                    type_b = Barista.objects.get(id=p_id)
+                except Barista.DoesNotExist as not_b:
+                    # print(not_b)
+                    return HttpResponse('Nessun utente registrato con queste credenziali.')
+                else:
+                    # print(type_b)
                     context = {
-                            'persona': p[0],
-                            'type': 'barista',
-                        }
-            else:
-                context = {
-                        'persona': p[0],
-                        'type': 'cliente',
+                        'persona': p,
+                        'type': 'barista',
                     }
-            return render(request, 'bar/area-riservata.html', context)
 
-            # try:
-            #     # type_c = Cliente.objects.get(id=p_id)
-            #     type_c = Cliente.objects.raw('select * from main.Cliente where id = %s;', [p_id])
-            #     # print(type_c[0])
-            # except Cliente.DoesNotExist as not_c:
-            #     # print(not_c)
-            #     try:
-            #         # type_b = Barista.objects.get(id=p_id)
-            #         type_b = Barista.objects.raw('select * from main.Barista where id = %s;', [p_id])
-            #     except Barista.DoesNotExist as not_b:
-            #         # print(not_b)
-            #         return HttpResponse('Nessun utente registrato con queste credenziali.')
-            #         # inserisci view per questa eccezione
-            #     else:
-            #         # print(type_b)
-            #         context = {
-            #             'persona': p[0],
-            #             'type': 'barista',
-            #         }
-            #
-            #         return render(request, 'bar/area-riservata.html', context)
-            # else:
-            #     # print(type_c)
-            #     context = {
-            #         'persona': p[0],
-            #         'type': 'cliente',
-            #     }
-            #
-            #     return render(request, 'bar/area-riservata.html', context)
+                    return render(request, 'bar/area-riservata.html', context)
+            else:
+                # print(type_c)
+                context = {
+                    'persona': p,
+                    'type': 'cliente',
+                }
+
+                return render(request, 'bar/area-riservata.html', context)
 
 
 def logout(request):
@@ -200,21 +243,24 @@ def registrazione(request):
             'password': password,
         }
 
-        # p = Persona(nome=nome, cognome=cognome, email=email, telefono=telefono, password=password)
-        # p.save()
-        cursor_p = connection.cursor()
-        cursor_p.execute('insert into main.Persona(nome, cognome, email, telefono, password) values(%s, %s, %s, %s, %s);', [nome, cognome, email, telefono, password])
+        # con raw query
+        # cursor_p = connection.cursor()
+        # cursor_p.execute('insert into main.Persona(nome, cognome, email, telefono, password) values(%s, %s, %s, %s, %s);', [nome, cognome, email, telefono, password])
+        #
+        # p_id = Persona.objects.raw('select id from main.Persona where nome = %s and cognome = %s and email = %s and telefono = %s and password = %s;', [nome, cognome, email, telefono, password])
+        #
+        # cursor_c = connection.cursor()
+        # cursor_c.execute('insert into main.Cliente(id) values(%s);', [p_id[0].id])
 
-        p_id = Persona.objects.raw('select id from main.Persona where nome = %s and cognome = %s and email = %s and telefono = %s and password = %s;', [nome, cognome, email, telefono, password])
+        # senza raw query
+        p = Persona(nome=nome, cognome=cognome, email=email, telefono=telefono, password=password)
+        p.save()
 
-        # c = Cliente(id=p)
-        # c.save()
-        cursor_c = connection.cursor()
-        cursor_c.execute('insert into main.Cliente(id) values(%s);', [p_id[0].id])
+        c = Cliente(id=p)
+        c.save()
 
         return render(request, 'bar/registrazione-avvenuta.html', context)
 
-# DA QUI
 
 def inserisciCocktail(request, barista_id):
     if request.method == 'POST':
@@ -222,6 +268,16 @@ def inserisciCocktail(request, barista_id):
         ingredienti = request.POST.get('ingredienti')
         prezzo = request.POST.get('prezzo')
 
+        # con raw query
+        # cursor_c = connection.cursor()
+        # cursor_c.execute('insert into main.Cocktail(nome, ingredienti, prezzo) values(%s, %s, %s);', [nomeCocktail, ingredienti, prezzo])
+        #
+        # cocktail = Cocktail.objects.raw('select * from main.Cocktail where nome = %s and ingredienti = %s and prezzo = %s;', [nomeCocktail, ingredienti, prezzo])
+        #
+        # cursor_bgc = connection.cursor()
+        # cursor_bgc.execute('insert into main.Barista_gestisce_cocktail(fk_id_cocktail, fk_id_barista, azione) values(%s, %s, %s);', [cocktail[0].id, barista_id, 'Inserimento'])
+
+        # senza raw query
         cocktail = Cocktail(nome=nomeCocktail, ingredienti=ingredienti, prezzo=prezzo)
         cocktail.save()
 
@@ -245,10 +301,37 @@ def modificaCocktail(request, barista_id, cocktail_id):
         ingredienti = request.POST.get('ingredienti')
         prezzo = request.POST.get('prezzo')
 
+        # con raw query
+        # cursor_c = connection.cursor()
+        # cursor_bgc = connection.cursor()
+        #
+        # if ingredienti and prezzo:
+        #     cursor_c.execute('update main.Cocktail set ingredienti = %s, prezzo = %s where id = %s;', [ingredienti, prezzo, cocktail_id])
+        #
+        #     cursor_bgc.execute('insert into main.Barista_gestisce_cocktail(fk_id_cocktail, fk_id_barista, azione) values(%s, %s, %s);', [cocktail_id, barista_id, 'Modifica'])
+        #     # print('aggiorna entrambi')
+        # elif not prezzo and ingredienti:
+        #     cursor_c.execute('update main.Cocktail set ingredienti = %s where id = %s;', [ingredienti, cocktail_id])
+        #
+        #     cursor_bgc.execute('insert into main.Barista_gestisce_cocktail(fk_id_cocktail, fk_id_barista, azione) values(%s, %s, %s);', [cocktail_id, barista_id, 'Modifica'])
+        #     # print('aggiorna ingredienti')
+        # elif not ingredienti and prezzo:
+        #     cursor_c.execute('update main.Cocktail set prezzo = %s where id = %s;', [prezzo, cocktail_id])
+        #
+        #     cursor_bgc.execute('insert into main.Barista_gestisce_cocktail(fk_id_cocktail, fk_id_barista, azione) values(%s, %s, %s);', [cocktail_id, barista_id, 'Modifica'])
+        #     # print('aggiorna prezzo')
+        # elif not ingredienti and not prezzo:
+        #     print('non aggiornare nulla')
+        #
+        # c = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [cocktail_id])
+        # context = {
+        #     'cocktail': c[0],
+        #     'barista_id': barista_id,
+        # }
+
+        # senza raw query
         barista = Barista.objects.get(id=barista_id)
-
         c = Cocktail.objects.get(id=cocktail_id)
-
         if ingredienti and prezzo:
             c.ingredienti = ingredienti
             c.prezzo = prezzo
@@ -284,6 +367,24 @@ def modificaCocktail(request, barista_id, cocktail_id):
 
 
 def ordinazioneCocktail(request, cliente_id, cocktail_id):
+    # con raw query
+    # c = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [cocktail_id])
+    #
+    # o = {
+    #     'id': c[0].id,
+    #     'nome': c[0].nome,
+    #     'prezzo': c[0].prezzo,
+    # }
+    #
+    # global ordine
+    # ordine = ordina(o)
+    #
+    # context = {
+    #     'c': c[0],
+    #     'cliente_id': cliente_id,
+    # }
+
+    # senza raw query
     c = Cocktail.objects.get(id=cocktail_id)
 
     o = {
@@ -299,6 +400,7 @@ def ordinazioneCocktail(request, cliente_id, cocktail_id):
         'c': c,
         'cliente_id': cliente_id,
     }
+
     return render(request, 'bar/ordinazione-cocktail.html', context)
 
 
@@ -323,6 +425,18 @@ def confermaOrdinazione(request, cliente_id):
 
     today = datetime.date.today()
 
+    # con raw query
+    # cursor_cp = connection.cursor()
+    # cursor_cp.execute('insert into main.Codice_prenotazione(codice) values(%s);', [codice])
+    #
+    # codice_prenotazione = CodicePrenotazione.objects.raw('select id from main.Codice_prenotazione where codice = %s;', [codice])
+    #
+    # for o in ordine:
+    #     cursor_o = connection.cursor()
+    #     cursor_o.execute('insert into main.Cliente_ordina_cocktail_ricevendo_codice_prenotazione(data, fk_id_cocktail, fk_id_codice_prenotazione, fk_id_cliente) '
+    #                      'values(%s, %s, %s, %s);', [today, o['id'], codice_prenotazione[0].id, cliente_id])
+
+    # senza raw query
     codice_prenotazione = CodicePrenotazione(codice=codice)
     codice_prenotazione.save()
 
@@ -343,6 +457,13 @@ def confermaOrdinazione(request, cliente_id):
 
 
 def eliminaCocktail(request, barista_id, cocktail_id):
+    # con raw query
+    # c = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [cocktail_id])
+    # nome = c[0].nome
+    # cursor = connection.cursor()
+    # cursor.execute('delete from main.Cocktail where id = %s;', [cocktail_id])
+
+    # senza raw query
     c = Cocktail.objects.get(id=cocktail_id)
     nome = c.nome
     c.delete()
@@ -355,6 +476,29 @@ def eliminaCocktail(request, barista_id, cocktail_id):
 
 
 def controlloCodice(request, barista_id, codice_id):
+    # con raw query
+    # codice = CodicePrenotazione.objects.raw('select * from main.Codice_prenotazione where id = %s;', [codice_id])
+    # cursor = connection.cursor()
+    # cursor.execute('update main.Codice_prenotazione set fk_id_barista = %s where id = %s;', [barista_id, codice_id])
+    #
+    # list_cocktails = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.raw('select * from main.Cliente_ordina_cocktail_ricevendo_codice_prenotazione where id = %s;', [codice_id])
+    #
+    # cocktails = []
+    #
+    # for c in list_cocktails:
+    #     cocktail = Cocktail.objects.raw('select * from main.Cocktail where id = %s;', [c.fk_id_cocktail.id])
+    #     cocktails.append({
+    #         'nome': cocktail[0].nome,
+    #         'ingredienti': cocktail[0].ingredienti,
+    #     })
+    #
+    # context = {
+    #     'barista_id': barista_id,
+    #     'codice': codice[0],
+    #     'list_cocktails': cocktails,
+    # }
+
+    # senza raw query
     codice = CodicePrenotazione.objects.get(id=codice_id)
     barista = Barista.objects.get(id=barista_id)
 
