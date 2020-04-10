@@ -39,7 +39,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5>{{ cocktail.nome }} modificato con successo!</h5>
-                    <img src="../../static/bar/gif/gif1.gif" width="100">
+                    <img src="{% static 'bar/gif/gif1.gif' %}" width="100">
                     <p> Ingredienti: {{ cocktail.ingredienti }} </p>
                     <p> Prezzo: {{ cocktail.prezzo }} €</p>
                     <a type="button" class="btn btn-dark btn-sm" href="{% url 'goToModificaMenu' barista_id %}">Torna a Modifica Menu</a>

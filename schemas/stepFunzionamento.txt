@@ -1,0 +1,31 @@
+Homepage
+- lista dei cocktail (classe HomepageView -> homepage.html)
+- login (login -> area-riservata.html, switch per Cliente e Barista)
+- registrazione (goToRegistrazione -> registrazione.html,
+		registrazione -> registrazione-avvenuta.html,
+		goToHomepage -> homepage.html)
+- logout (logout -> homepage.html)
+
+CLIENTE
+- visualizza storico (goToStorico -> storico.html)
+- ordina (goToOrdinazione -> ordinazione.html,
+		ordinazioneCocktail -> ordinazione-cocktail.html,
+		goToOrdinazione -> ordinazione.html,
+		confermaOrdinazione -> ordinazione-avvenuta.html
+		
+		ordina (aggiorna ordinazioni e somma prezzo)
+		)
+		
+BARISTA
+- modifica cocktail (goToModificaMenu -> modifica-menu.html,
+			goToModificaCocktail -> modifica-cocktail.html,
+			modificaCocktail -> modifica-avvenuta.html,
+			
+			eliminaCocktail -> elimina-cocktail.html
+			)
+- inserisci cocktail (goToInserisciCocktail -> inserisci-cocktail.html,
+			inserisciCocktail -> inserimento-avvenuto.html
+			)
+- controlla codici (goToCodicePrenotazione -> codice-prenotazione.html,
+			controlloCodice -> controllo-codice.html,
+			)

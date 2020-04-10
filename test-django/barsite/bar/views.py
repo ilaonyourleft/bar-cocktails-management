@@ -114,7 +114,7 @@ def goToStorico(request, cliente_id):
     # senza raw query
     cliente = Cliente.objects.get(id=cliente_id)
 
-    list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_cliente=cliente[0])
+    list_ordinazioni = ClienteOrdinaCocktailRicevendoCodicePrenotazione.objects.filter(fk_id_cliente=cliente)
 
     cocktails = []
     for ordinazione in list_ordinazioni:
