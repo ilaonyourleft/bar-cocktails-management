@@ -1,0 +1,8 @@
+REPORT
+
+1. Django
+2. IDE
+3. Scenario
+4. Requisiti + Casi d'uso
+5. Descrizione DB
+

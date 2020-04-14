@@ -1,0 +1,14 @@
+barsite
+	bar
+		migrations
+			modifiche fatte sulla struttura del database
+		static
+			file statici (bootstrap, css, gif, imgs, slideshow)
+		templates
+			file .html delle pagine dell'applicazione
+		file per la logica (views.py), modelli (models.py), rotte (urls.py)
+	barsite
+		file di configurazione di progetto (settings, urls, ecc...)
+	db
+		db.sqlite3 -> database di progetto
+	manage.py -> main

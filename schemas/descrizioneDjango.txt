@@ -1,0 +1,15 @@
+Introduzione Django
+Caratteristiche
+Versione semplificata (non tutte le funzionalità)
+
+Passi del tutorial
+	requests and responses
+	models
+		migrations
+	views and templates
+		querysets
+		rawquertsets
+		html + css + bootstrap
+	static files
+	
+	login mock (senza token)
