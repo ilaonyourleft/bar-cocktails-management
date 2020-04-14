@@ -3,6 +3,7 @@ REPORT
 1. Django
 2. IDE
 3. Scenario
-4. Requisiti + Casi d'uso
-5. Descrizione DB
-
+4. Diagramma EER
+5. Mapping Relazionale
+6. Descrizione DB
+7. Descrizione progetto (login, file statici)

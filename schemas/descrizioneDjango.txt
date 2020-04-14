@@ -6,9 +6,9 @@ Passi del tutorial
 	requests and responses
 	models
 		migrations
-	views and templates
 		querysets
-		rawquertsets
+		rawquerysets
+	views and templates
 		html + css + bootstrap
 	static files
 	
